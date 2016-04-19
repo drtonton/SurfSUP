@@ -18,13 +18,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.AbstractHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.converter.HttpMessageNotWritableException;
-import org.springframework.http.converter.StringHttpMessageConverter;
-import org.springframework.http.converter.json.GsonHttpMessageConverter;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.servlet.http.HttpSession;
@@ -49,6 +45,31 @@ public class SurfSupController {
     static final String IOP_TIDE_URL = "http://www.worldtides.info/api?extremes&lat=33.746&lon=-84.127&key=cb380c07-986b-452e-ab83-c8ad144407bf";
     static final String PAWLEYS_TIDE_URL = "http://www.worldtides.info/api?extremes&lat=34.805&lon=-82.211&key=cb380c07-986b-452e-ab83-c8ad144407bf";
     static final String WASHOUT_TIDE_URL = "http://www.worldtides.info/api?extremes&lat=32.655&lon=-79.940&key=cb380c07-986b-452e-ab83-c8ad144407bf";
+
+    /**
+     * This converter will allow for parsing "text/json" into a HashMap. Required to utilize the World Tides API.
+     * Credit to Zach Oakes for helping with this solution.
+     */
+    AbstractHttpMessageConverter converter = new AbstractHttpMessageConverter(MediaType.parseMediaType("text/json")) {
+        @Override
+        protected Object readInternal(Class clazz, HttpInputMessage inputMessage) throws IOException, HttpMessageNotReadableException {
+            ObjectMapper om = new ObjectMapper();
+            InputStream is = inputMessage.getBody();
+            Scanner s = new Scanner(is).useDelimiter("\\A");
+            String msg = s.next();
+            return om.readValue(msg, clazz);
+        }
+
+        @Override
+        protected void writeInternal(Object o, HttpOutputMessage outputMessage) throws IOException, HttpMessageNotWritableException {
+
+        }
+
+        @Override
+        protected boolean supports(Class clazz) {
+            return true;
+        }
+    };
 
     @Autowired
     UserRepository users;
@@ -115,7 +136,7 @@ public class SurfSupController {
     // CREATE A SESH
     @RequestMapping(path = "/sesh", method = RequestMethod.POST)
     public Sesh addSesh (@RequestBody Sesh sesh, HttpSession session) {
-        User user = users.findByUsername((String) session.getAttribute("username"));
+        User user = getUserFromSession(session);
         sesh.setUser(user);
         seshs.save(sesh);
 
@@ -128,7 +149,7 @@ public class SurfSupController {
     // UPLOAD PROFILE PICTURE (IF ALREADY LOGGED IN)
     @RequestMapping(path = "/upload", method = RequestMethod.POST)
     public void addProfile (@RequestBody MultipartFile photo, HttpSession session) throws IOException {
-        User existing = users.findByUsername((String) session.getAttribute("username"));
+        User existing = getUserFromSession(session);
 
         // store photo file name in db
         File dir = new File("public/profile");
@@ -152,7 +173,7 @@ public class SurfSupController {
     //SEND FRIEND REQUEST
     @RequestMapping(path = "/friend", method = RequestMethod.POST)
     public void createFriend (HttpSession session, @RequestBody String username) throws Exception {
-        User requester = users.findByUsername((String) session.getAttribute("username"));
+        User requester = getUserFromSession(session);
         User approver = users.findByUsername(username);
         Friend friend = new Friend (requester, approver);
         if (friends.findFirstByRequesterAndApprover(requester, approver) == null){
@@ -172,7 +193,7 @@ public class SurfSupController {
     //ACCEPTS FRIEND REQUEST
     @RequestMapping(path = "/friend/friend", method = RequestMethod.POST)
     public void acceptFriend (HttpSession session, @RequestBody String username) throws Exception {
-        User requester = users.findByUsername((String) session.getAttribute("username"));
+        User requester = getUserFromSession(session);
         User approver = users.findByUsername(username);
         Friend friend = new Friend (requester, approver);
         if (friends.findFirstByRequesterAndApprover(requester, approver) == null){
@@ -195,7 +216,7 @@ public class SurfSupController {
     //JOIN A SESH (ID = SESH ID)
     @RequestMapping(path = "/join/{id}", method = RequestMethod.POST)
     public void joinSesh (@PathVariable("id") int seshId, HttpSession session) throws Exception {
-        User user = users.findByUsername((String) session.getAttribute("username"));
+        User user = getUserFromSession(session);
         Sesh sesh = seshs.findOne(seshId);
         Join join = new Join (user, sesh);
         if (joins.findFirstByUserAndSesh(user, sesh) == null) {
@@ -242,27 +263,6 @@ public class SurfSupController {
     //TIDAL EXTREMES AT IOP
     @RequestMapping(path = "/tidesIOP", method = RequestMethod.GET)
     public HashMap tidesIop () {
-        AbstractHttpMessageConverter converter = new AbstractHttpMessageConverter(MediaType.parseMediaType("text/json")) {
-            @Override
-            protected Object readInternal(Class clazz, HttpInputMessage inputMessage) throws IOException, HttpMessageNotReadableException {
-                ObjectMapper om = new ObjectMapper();
-                InputStream is = inputMessage.getBody();
-                Scanner s = new Scanner(is).useDelimiter("\\A");
-                String msg = s.next();
-                return om.readValue(msg, clazz);
-            }
-
-            @Override
-            protected void writeInternal(Object o, HttpOutputMessage outputMessage) throws IOException, HttpMessageNotWritableException {
-
-            }
-
-            @Override
-            protected boolean supports(Class clazz) {
-                return true;
-            }
-        };
-
         RestTemplate query = new RestTemplate(Arrays.asList(converter));
         HashMap result = query.getForObject(IOP_TIDE_URL, HashMap.class);
         return result;
@@ -271,27 +271,6 @@ public class SurfSupController {
     //TIDAL EXTREMES AT PAWLEY'S PIER
     @RequestMapping(path = "/tidesPawleys", method = RequestMethod.GET)
     public HashMap tidesPawleys () {
-        AbstractHttpMessageConverter converter = new AbstractHttpMessageConverter(MediaType.parseMediaType("text/json")) {
-            @Override
-            protected Object readInternal(Class clazz, HttpInputMessage inputMessage) throws IOException, HttpMessageNotReadableException {
-                ObjectMapper om = new ObjectMapper();
-                InputStream is = inputMessage.getBody();
-                Scanner s = new Scanner(is).useDelimiter("\\A");
-                String msg = s.next();
-                return om.readValue(msg, clazz);
-            }
-
-            @Override
-            protected void writeInternal(Object o, HttpOutputMessage outputMessage) throws IOException, HttpMessageNotWritableException {
-
-            }
-
-            @Override
-            protected boolean supports(Class clazz) {
-                return true;
-            }
-        };
-
         RestTemplate query = new RestTemplate(Arrays.asList(converter));
         HashMap result = query.getForObject(PAWLEYS_TIDE_URL, HashMap.class);
         return result;
@@ -300,27 +279,6 @@ public class SurfSupController {
     //TIDAL EXTREMES AT THE WASHOUT
     @RequestMapping(path = "/tidesWashout", method = RequestMethod.GET)
     public HashMap tidesWashout () {
-        AbstractHttpMessageConverter converter = new AbstractHttpMessageConverter(MediaType.parseMediaType("text/json")) {
-            @Override
-            protected Object readInternal(Class clazz, HttpInputMessage inputMessage) throws IOException, HttpMessageNotReadableException {
-                ObjectMapper om = new ObjectMapper();
-                InputStream is = inputMessage.getBody();
-                Scanner s = new Scanner(is).useDelimiter("\\A");
-                String msg = s.next();
-                return om.readValue(msg, clazz);
-            }
-
-            @Override
-            protected void writeInternal(Object o, HttpOutputMessage outputMessage) throws IOException, HttpMessageNotWritableException {
-
-            }
-
-            @Override
-            protected boolean supports(Class clazz) {
-                return true;
-            }
-        };
-
         RestTemplate query = new RestTemplate(Arrays.asList(converter));
         HashMap result = query.getForObject(WASHOUT_TIDE_URL, HashMap.class);
         return result;
@@ -336,7 +294,7 @@ public class SurfSupController {
     //RETURNS CURRENT USER
     @RequestMapping(path = "/currentUser", method = RequestMethod.GET)
     public User loggedInUser (HttpSession session) {
-        User user = users.findByUsername((String) session.getAttribute("username"));
+        User user = getUserFromSession(session);
         return user;
     }
 
@@ -364,7 +322,7 @@ public class SurfSupController {
     //DISPLAY CURRENT USERS SESHS
     @RequestMapping(path = "currentUser/{id}", method = RequestMethod.GET)
     public List<Sesh> currentUsersSeshs (HttpSession session) {
-        User user = users.findByUsername((String) session.getAttribute("username"));
+        User user = getUserFromSession(session);
         List<Sesh> userSeshs = seshs.findAllByUser(user);
         return userSeshs;
     }
@@ -372,7 +330,7 @@ public class SurfSupController {
     //DISPLAY SESHS BY THE CURRENT USER AND HIS/HER FRIENDS
     @RequestMapping(path = "/user/friend/sesh", method = RequestMethod.GET)
     public List<Sesh> displayUserAndFriendsSeshs (HttpSession session) {
-        User loggedIn = users.findByUsername((String) session.getAttribute("username"));
+        User loggedIn = getUserFromSession(session);
         List <Sesh> usersSeshs = seshs.findAllByUser(loggedIn);
         List <Sesh> friendsSeshs = new ArrayList<>();
         // friendsSesh is to be returned product
@@ -406,7 +364,7 @@ public class SurfSupController {
     @RequestMapping(path = "/user", method = RequestMethod.GET)
     public List<User> displayUser (HttpSession session) {
         List<User> userList = (List<User>) users.findAll();
-        User user = users.findByUsername((String) session.getAttribute("username"));
+        User user = getUserFromSession(session);
         userList.remove(user);
         return userList;
     }
@@ -414,7 +372,7 @@ public class SurfSupController {
     //DISPLAY FRIENDS LIST
     @RequestMapping(path = "/friend", method = RequestMethod.GET)
     public List<User> friendList (HttpSession session) {
-        User user = users.findByUsername((String) session.getAttribute("username"));
+        User user = getUserFromSession(session);
         List<Friend> allList = friends.findAllByRequester(user);
         allList.addAll(friends.findAllByApprover(user));
         //creates a list of friend objects that contain the current user
@@ -438,7 +396,7 @@ public class SurfSupController {
     //NUMBER OF FRIEND REQUESTS
     @RequestMapping(path = "/requestAmt", method = RequestMethod.GET)
     public int friendRequestsAmt (HttpSession session) {
-        User user = users.findByUsername((String) session.getAttribute("username"));
+        User user = getUserFromSession(session);
         List<Friend> allList = (List<Friend>) friends.findAll();
         List<User> requestList = new ArrayList<>();
         for (Friend f : allList) {
@@ -462,7 +420,7 @@ public class SurfSupController {
     //LIST OF ACTUAL FRIEND REQUESTS
     @RequestMapping(path = "/requests", method = RequestMethod.GET)
     public List<User> friendRequests (HttpSession session) throws Exception {
-        User user = users.findByUsername((String) session.getAttribute("username"));
+        User user = getUserFromSession(session);
         List<Friend> allList = (List<Friend>) friends.findAll();
         List<User> requestList = new ArrayList<>();
         if (allList != null) {
@@ -521,7 +479,7 @@ public class SurfSupController {
     //EDIT EXISTING SESH
     @RequestMapping(path = "/sesh", method = RequestMethod.PUT)
     public void editSesh (@RequestBody Sesh sesh, HttpSession session) {
-        User u = users.findByUsername((String) session.getAttribute("username"));
+        User u = getUserFromSession(session);
         if (u.getId() == sesh.getUser().getId()) {
             seshs.save(sesh);
         }
@@ -542,7 +500,7 @@ public class SurfSupController {
     //REMOVE SOMEONE FROM FRIENDS LIST
     @RequestMapping(path = "/friend/{id}", method = RequestMethod.DELETE)
     public void removeFriend (@PathVariable("id") int id, HttpSession session) {
-        User loggedInUser = users.findByUsername((String) session.getAttribute("username"));
+        User loggedInUser = getUserFromSession(session);
         User friendToRemove = users.findOne(id);
         Friend friend = friends.findFirstByRequesterAndApprover(loggedInUser, friendToRemove);
         Friend friend2 = friends.findFirstByRequesterAndApprover(friendToRemove, loggedInUser);
@@ -553,9 +511,18 @@ public class SurfSupController {
     //DENY FRIEND REQUEST (THE ID = FRIENDING USER ID)
     @RequestMapping(path = "/deny/{id}", method = RequestMethod.DELETE)
     public void denyFriendRequest (@PathVariable("id") int id, HttpSession session) {
-        User loggedIn = users.findByUsername((String) session.getAttribute("username"));
+        User loggedIn = getUserFromSession(session);
         User requester = users.findOne(id);
         Friend friend = friends.findFirstByRequesterAndApprover(requester, loggedIn);
         friends.delete(friend);
+    }
+
+    /**
+     * Methods from refactoring:
+     */
+
+    public User getUserFromSession(HttpSession session) {
+        User user = users.findByUsername((String) session.getAttribute("username"));
+        return user;
     }
 }
