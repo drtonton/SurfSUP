@@ -126,7 +126,7 @@ public class SurfSupController {
                 } else if (!PasswordStorage.verifyPassword(user.getPassword(), existing.getPassword())) {
                     throw new Exception("Password do not match");
                 }
-            } else if (existing == null) {
+            } else {
                 throw new Exception("Username does not exist in database");
             }
         }
@@ -264,38 +264,34 @@ public class SurfSupController {
     @RequestMapping(path = "/tidesIOP", method = RequestMethod.GET)
     public HashMap tidesIop () {
         RestTemplate query = new RestTemplate(Arrays.asList(converter));
-        HashMap result = query.getForObject(IOP_TIDE_URL, HashMap.class);
-        return result;
+        return query.getForObject(IOP_TIDE_URL, HashMap.class);
     }
 
     //TIDAL EXTREMES AT PAWLEY'S PIER
     @RequestMapping(path = "/tidesPawleys", method = RequestMethod.GET)
     public HashMap tidesPawleys () {
         RestTemplate query = new RestTemplate(Arrays.asList(converter));
-        HashMap result = query.getForObject(PAWLEYS_TIDE_URL, HashMap.class);
-        return result;
+        return query.getForObject(PAWLEYS_TIDE_URL, HashMap.class);
+
     }
 
     //TIDAL EXTREMES AT THE WASHOUT
     @RequestMapping(path = "/tidesWashout", method = RequestMethod.GET)
     public HashMap tidesWashout () {
         RestTemplate query = new RestTemplate(Arrays.asList(converter));
-        HashMap result = query.getForObject(WASHOUT_TIDE_URL, HashMap.class);
-        return result;
+        return query.getForObject(WASHOUT_TIDE_URL, HashMap.class);
     }
 
     // CURRENT USER USERNAME
     @RequestMapping(path = "/currentUsername", method = RequestMethod.GET)
     public String loggedInUsername (HttpSession session) {
-        String username = (String) session.getAttribute("username");
-        return username;
+        return (String) session.getAttribute("username");
     }
 
     //RETURNS CURRENT USER
     @RequestMapping(path = "/currentUser", method = RequestMethod.GET)
     public User loggedInUser (HttpSession session) {
-        User user = getUserFromSession(session);
-        return user;
+        return getUserFromSession(session);
     }
 
     // LOGOUT
@@ -315,16 +311,14 @@ public class SurfSupController {
     @RequestMapping(path = "/user/{id}/sesh", method = RequestMethod.GET)
     public List<Sesh> displaySeshByUser (@PathVariable("id") int id) {
         User user = users.findOne(id);
-        List<Sesh> list = seshs.findAllByUser(user);
-        return list;
+        return seshs.findAllByUser(user);
     }
 
     //DISPLAY CURRENT USERS SESHS
     @RequestMapping(path = "currentUser/{id}", method = RequestMethod.GET)
     public List<Sesh> currentUsersSeshs (HttpSession session) {
         User user = getUserFromSession(session);
-        List<Sesh> userSeshs = seshs.findAllByUser(user);
-        return userSeshs;
+        return seshs.findAllByUser(user);
     }
 
     //DISPLAY SESHS BY THE CURRENT USER AND HIS/HER FRIENDS
@@ -339,19 +333,7 @@ public class SurfSupController {
         allList.addAll(friends.findAllByApprover(loggedIn));
         //creates a list of friend objects that contain the current user
 
-        //Credit Alex Hughes for Parallel Stream help
-        ArrayList<User> friendsList = allList.parallelStream()
-                .filter(Friend::getIsApproved)
-                .map(friend -> {
-                    if (friend.getRequester().getId() == loggedIn.getId()) {
-                        return friend.getApprover();
-                    }
-                    else if (friend.getApprover().getId() == loggedIn.getId()) {
-                        return friend.getRequester();
-                    }
-                    else return null;
-                })
-                .collect(Collectors.toCollection(ArrayList<User>::new));
+        List<User> friendsList = returnList(loggedIn, allList);
 
         for (User user : friendsList) {
             friendsSeshs.addAll(seshs.findAllByUser(user));
@@ -377,20 +359,7 @@ public class SurfSupController {
         allList.addAll(friends.findAllByApprover(user));
         //creates a list of friend objects that contain the current user
 
-        //Credit Alex Hughes for Parallel Stream help
-        ArrayList<User> friendsList = allList.parallelStream()
-                .filter(Friend::getIsApproved)
-                .map(friend -> {
-                    if (friend.getRequester().getId() == user.getId()) {
-                        return friend.getApprover();
-                    }
-                    else if (friend.getApprover().getId() == user.getId()) {
-                        return friend.getRequester();
-                    }
-                    else return null;
-                })
-                .collect(Collectors.toCollection(ArrayList<User>::new));
-        return friendsList;
+        return returnList(user, allList);
     }
 
     //NUMBER OF FRIEND REQUESTS
@@ -525,4 +494,20 @@ public class SurfSupController {
         User user = users.findByUsername((String) session.getAttribute("username"));
         return user;
     }
+
+    public List<User> returnList (User user, List<Friend> allList) {
+        return allList.parallelStream()
+                .filter(Friend::getIsApproved)
+                .map(friend -> {
+                    if (friend.getRequester().getId() == user.getId()) {
+                        return friend.getApprover();
+                    }
+                    else if (friend.getApprover().getId() == user.getId()) {
+                        return friend.getRequester();
+                    }
+                    else return null;
+                })
+                .collect(Collectors.toCollection(ArrayList<User>::new));
+    }
+
 }
