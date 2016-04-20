@@ -1,39 +1,108 @@
-form {
-        h1 {
-          text-align: center;
-        }
+.add-sessions-container {
+  padding: 40px 8px;
+  width: 90%;
+  margin: 0 auto;
+}
+@media (min-width: 532px) {
+.add-sessions-container {
+  padding: 40px 80px;
+}
+}
+.add-session-form {
+  max-width: 800px;
+}
+.map-container {
+  border: 1px solid white;
+  padding: 9px;
+  margin-bottom: 15px auto;
+  margin-bottom: 25px;
+}
+.orange-line {
+  width: 15%;
+  border-color: #FC9B1B;
+  margin: 5px auto;
+}
+
+.surf-sup-button-container {
+  width: 75%;
+  display: block;
+  margin: 0 auto;
+}
+
+.add-session-form {
+        max-width
         .btn-group, .form-group {
           width: 100%;
-        }
-        .surfSupButton {
-          width: 49.5%;
-          display: inline-block;
         }
         .btn-success {
           text-transform: uppercase;
         }
         .surf-sup-button {
-        border: none;
         padding: 14px;
         color: #fff;
-        margin: 0 10px;
-        background: rgba (25,29,165, 0.8);
+        background: none;
+        border: 1px solid white;
         font-weight: 700;
-        border-radius: 4px;
-        width: 42.5%;
+        width: 48.9%;
+        text-transform: uppercase;
+        font-size: 1.3em;
+        margin-right: 1%;
       }
-      .isActiveSup {
-        background: yellow;
+      .surf-sup-button:last-child {
+        margin-right: 0px;
       }
       .disabled {
         background: #eee;
         color: green;
       }
       .active {
-        background: rgb(25,29,165);
+        background: #278A86;
       }
       .disabled {
         background: #eee;
         color: #aaa;
       }
+      input.form-control,input.form-control:focus {
+        outline: none;
+        border: 1px solid white;
+        -webkit-box-shadow: none !important;
+        -moz-box-shadow: none !important;
+        box-shadow: none !important;
+        font-family: 'Inconsolata', sans-serif;
+
+      }
+      .add-session-form input {
+        height: 48px;
+      }
+
+      .add-session-form input:focus {
+        border: 1px solid white;
+      }
+      .main-input {
+          border-radius: 0;
+          width: 75%;
+          margin: 0 auto;
+          font-size: 1.3em;
+      }
+      .submit-session-button {
+        background-color: #278A86;
+        box-shadow: none;
+        border: none;
+        color: white;
+        font-family: 'Inconsolata', sans-serif;
+        color: white;
+        text-transform: uppercase;
+        width: 135px;
+        height: 50px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        transition: all 0.3s ease 0s;
+        border-radius: 0;
+        text-transform: uppercase;
+        font-size: 1.2em;
+        margin: 0 auto;
+        display: block;
+      }
+
+
 }

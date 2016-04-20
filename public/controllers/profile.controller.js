@@ -1,44 +1,34 @@
 angular
   .module('surfSup')
-  .controller('ProfileController', function($scope,$location, FriendService, $routeParams,$rootScope) {
+  .controller('ProfileController', function($scope,$location, FriendService, $routeParams,$rootScope, UserService) {
     $location.path() === "/login" || $location.path() === "/create" ? $rootScope.showBar = false : $rootScope.showBar = true;
+
     $scope.sendInvite = sendInvite;
     $scope.hideAddButton = hideAddButton;
 
-      // GET FRIENDS PROFILE
+      // GET FRIENDS PROFILE & RUN HIDE ADD FRIEND BUTTON FUNCTION
       FriendService.getProfile($routeParams.id)
       .then(function(data) {
-        // console.log('friend profile info: ', data.data);
         $scope.profiles = data.data;
         FriendService.friendsList()
           .success(function(friends){
-            // console.log('before map function: ', friends);
             var friendsIdList = _.map(friends, function(el) {
               return el.id;
             });
-            // console.log('$routeParams.id:', $routeParams.id);
-            // console.log('friendsIdList:',friendsIdList);
             if(friendsIdList.indexOf(+$routeParams.id) !== -1) {
-              // Hide button here.
-              // console.log('inside indexof method');
               hideAddButton();
-            }
-          })
+            } else {
+                UserService.currentUser().then(function(data) {
+                  $scope.currentUser = data.data;
+                  if(+$routeParams.id === $scope.currentUser.id) {
+                    hideAddButton();
+                  };
+                });
+              };
+          });
       },function(err) {
         console.log("THIS IS AN ERROR",err);
       });
-
-      // GET CURRENT USER PROFILE
-      FriendService.getProfile($routeParams.id)
-      .then(function(data) {
-        $scope.profiles = data.data;
-        console.log('getProfile', $scope.profiles.id )
-        console.log('$routeParams.id', $routeParams.id)
-      }).then(function() {
-        if(+$routeParams.id === $scope.profiles.id) {
-          hideAddButton();
-        }
-      })
 
       // HIDE ADD BUTTON ON FRIENDS PROFILE PAGE
       function hideAddButton () {

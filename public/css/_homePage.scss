@@ -1,0 +1,115 @@
+// .verticalText {
+//   transform: rotate(90deg);
+// 	transform-origin: left top 0;
+//   display: inline-block;
+// }
+h1#PageHeadline {
+  font-family: 'Open Sans Condensed', sans-serif;
+  margin-bottom: 10px;
+  font-size: 40px;
+  font-weight: 600;
+  padding-top: 25px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #fff;
+}
+
+div.headlineUnderline {
+  border-bottom: 1px solid #FC9B1B;
+  margin: 0 auto;
+  width: 150px;
+  margin-bottom: 10px;
+}
+
+ul {
+  margin: 0 0 10px 0;
+  padding: 0;
+  text-align: center;
+  li.cityLink {
+    display: inline-block;
+    padding: 0 10px 0 10px;
+  }
+  li.cityLink.middleLink {
+    border-left: 1px solid #fff;
+    border-right: 1px solid #fff;
+  }
+  li.cityLink a {
+    font-size: 16px;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: #fff;
+  }
+  li.cityLink a:hover {
+    color: #ddd;
+  }
+}
+
+div.tableWrapper {
+  padding: 10px;
+  margin: 0 50px;
+  th {
+    font-family: 'Inconsolata';
+    border-top: none;
+    text-align: center;
+    font-weight: 100;
+  }
+  table.table.table-bordered {
+    border: 1px solid #aaa;
+  }
+  tr#weatherHeaders {
+    background-color: #278A86;
+  }
+  .weather-data , .table-bordered > thead > tr > th, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > tbody > tr > td, .table-bordered > tfoot > tr > td {
+    border: 1px solid #aaa;
+    font-size: 1.5em;
+  }
+  td {
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+  }
+  #timeStamp {
+    font-weight: lighter;
+  }
+  .table-bordered > thead > tr > th, .table-bordered > thead > tr > td {
+        border-bottom-width: 0px;
+  }
+  h3#tideHeadline {
+    display: block;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  #weatherPageBtn {
+    background-color: #fff;
+    color: #1F5064;
+    font-weight: bold;
+    border-radius: 0;
+    border: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    font-size: 1.3em;
+  }
+}
+.time-column {
+  width: 10%;
+}
+.surf-column {
+  width: 24%;
+}
+.wind-column {
+  width: 42%;
+}
+.temp-column {
+  width: 26%;
+}
+
+@media (min-width: 450px) {
+.wind-column {
+  width: 26%;
+}
+}
+.weather-data {
+  font-size: 1.7em;
+}

@@ -1,115 +1,122 @@
-  <h1>CREATE AN ACCOUNT</h1>
-  <hr>
-  <form class="form create-form" name="form" ng-app novalidate>
-    <label for="firstName">First Name</label>
-    <div class="form-group">
-      <input class="form-control"
-      ng-model ="acctObj.firstName"
-      type="text"
-      name="firstName"
-      required/>
+<div class="create-outterSiteWrapper">
+  <div class="create-innerSiteWrapper">
+    <img src="../images/SurfSUP-Logo.png" alt="" />
+    <div class="create-header-wrapper">
+    <h1>CREATE AN ACCOUNT</h1>
     </div>
-    <div ng-show="submitted && form.$invalid" >
-      <div ng-show="form.firstName.$error.required" class="alert alert-danger">
-        First Name is Required
+    <form class="form create-form" name="form" ng-app novalidate>
+      <label for="firstName">First Name</label>
+      <div class="form-group">
+        <input
+        class="main-input form-control"
+        ng-model ="acctObj.firstName"
+        type="text"
+        name="firstName"
+        required/>
       </div>
-    </div>
-    <label for="lastName">Last Name</label>
-    <div class="form-group">
-      <input class="form-control"
-      ng-model ="acctObj.lastName"
-      type="text"
-      name="lastName"
-      required>
-    </div>
-    <div ng-show="submitted && form.$invalid" >
-      <div ng-show="form.lastName.$error.required" class="alert alert-danger">
-        Last Name is Required
+      <div ng-show="submitted && form.$invalid" >
+        <div ng-show="form.firstName.$error.required" class="alert alert-danger">
+          First Name is Required
+        </div>
       </div>
-    </div>
-    <label for="email">Email Address</label>
-    <div class="form-group">
-      <input class="form-control"
-      ng-model ="acctObj.email"
-      type="email"
-      name="email"
-      required>
-    </div>
-    <div ng-show="submitted && form.$invalid" >
-      <div ng-show="form.email.$error.required" class="alert alert-danger">
-        Email address is Required
+      <label for="lastName">Last Name</label>
+      <div class="form-group">
+        <input class="main-input form-control"
+        ng-model ="acctObj.lastName"
+        type="text"
+        name="lastName"
+        required>
       </div>
-    </div>
-    <div ng-show="submitted && form.$invalid" >
-      <div ng-show="form.email.$error.email" class="alert alert-danger">
-        This is not a valid email.
+      <div ng-show="submitted && form.$invalid" >
+        <div ng-show="form.lastName.$error.required" class="alert alert-danger">
+          Last Name is Required
+        </div>
       </div>
-    </div>
-    <label for="email">Phone Number</label>
-    <div class="form-group">
-      <input class="form-control"
-      ng-model ="acctObj.phone"
-      placeholder="###-###-####"
-      ui-mask="999-999-9999"
-      type="tel"
-      name="phone"
-      required>
-    </div>
-    <div ng-show="submitted && form.$invalid" >
-      <div ng-show="form.phone.$error.required" class="alert alert-danger">
-        Phone number is Required
+      <label for="email">Email Address</label>
+      <div class="form-group">
+        <input class="main-input form-control"
+        ng-model ="acctObj.email"
+        type="email"
+        name="email"
+        required>
       </div>
-    </div>
-    <label for="name">Location</label>
-    <div class="form-group">
-      <input class="form-control"
-      type="text"
-      name="location"
-      required>
-    </div>
+      <div ng-show="submitted && form.$invalid" >
+        <div ng-show="form.email.$error.required" class="alert alert-danger">
+          Email address is Required
+        </div>
+      </div>
+      <div ng-show="submitted && form.$invalid" >
+        <div ng-show="form.email.$error.email" class="alert alert-danger">
+          This is not a valid email.
+        </div>
+      </div>
+      <label for="email">Phone Number</label>
+      <div class="form-group">
+        <input class="main-input form-control"
+        ng-model ="acctObj.phone"
+        placeholder="###-###-####"
+        ui-mask="999-999-9999"
+        type="tel"
+        name="phone"
+        required>
+      </div>
+      <div ng-show="submitted && form.$invalid" >
+        <div ng-show="form.phone.$error.required" class="alert alert-danger">
+          Phone number is Required
+        </div>
+      </div>
+      <label for="name">Location</label>
+      <div class="form-group">
+        <input class="main-input form-control"
+        type="text"
+        name="location"
+        required>
+      </div>
 
-    <hr>
-    <label for="username">Username</label>
-    <div class="form-group">
-      <input class="form-control"
-      ng-model ="acctObj.username"
-      placeholder="Enter New Username"
-      type="text"
-      name='username'
-      required>
-    </div>
-    <div ng-show="submitted && form.$invalid" >
-      <div ng-show="form.username.$error.required" class="alert alert-danger">
-        Username is Required
+      <hr>
+      <label for="username">New Username</label>
+      <div class="form-group">
+        <input class="main-input form-control"
+        ng-model ="acctObj.username"
+        type="text"
+        name='username'
+        required>
       </div>
-    </div>
-    <label for="password">Password</label>
-    <div class="form-group">
-      <input class="form-control"
-      ng-model ="acctObj.password"
-      placeholder="Enter New Password"
-      type="password"
-      name="password"
-      required>
-    </div>
-    <div ng-show="submitted && form.$invalid" >
-      <div ng-show="form.password.$error.required" class="alert alert-danger">
-        Password is Required
+      <div ng-show="submitted && form.$invalid" >
+        <div ng-show="form.username.$error.required" class="alert alert-danger">
+          Username is Required
+        </div>
       </div>
-    </div>
+      <label for="password">New Password</label>
+      <div class="form-group">
+        <input class="main-input form-control"
+        ng-model ="acctObj.password"
+        type="password"
+        name="password"
+        required>
+      </div>
+      <div ng-show="submitted && form.$invalid" >
+        <div ng-show="form.password.$error.required" class="alert alert-danger">
+          Password is Required
+        </div>
+      </div>
 
-    <!-- <div class="form-group">
-      <label for="exampleInputFile">Photo Upload</label> <input type="file">
-    </div> -->
+      <!-- <div class="form-group">
+        <label for="exampleInputFile">Photo Upload</label> <input type="file">
+      </div> -->
 
-    <button ng-click = "submitForm(); submitted=true"
-      class="submit-button"
-      type="submit">Submit</button>
-    <a href="/#/login"><button
-      class="cancel-button"
-      type="button"
-      name="button">Cancel</button>
-    </a>
+      <button ng-click = "submitForm(); submitted=true"
+        class="submit-button"
+        type="submit">Submit</button>
+      <a href="/#/login">
+        <a href="/#/login"
+        class="cancel-button"
+        type="button"
+        name="button">Cancel</a>
+      </a>
 
 
-  </form>
+    </form>
+
+  </div>
+</div>

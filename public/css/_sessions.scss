@@ -1,13 +1,43 @@
-h6 {
-  text-align: center;
-  color: #777;
-}
 
+.sesh-activities-container {
+    padding: 40px 25px;
+  }
+@media (min-width: 532px) {
+.sesh-activities-container {
+  padding: 40px 80px;
+}
+}
+.indiv-sesh-activities-container p , h5, strong {
+  font-family: 'Inconsolata', sans-serif;
+}
+.add-session-button {
+  background-color: #1F5064;
+  border: none;
+  font-family: 'Open Sans Condensed', sans-serif;
+  color: white;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 8px 10px;
+  display: block;
+  margin: 0 auto;
+  font-size: 1.5em;
+  letter-spacing: 1px;
+}
+strong {
+  text-transform: uppercase;
+  margin-left: 5px;
+}
+h6 {
+  color: white;
+  font-family: 'Inconsolata', sans-serif;
+  text-align: center;
+  font-size: 1em;
+}
 .list-group {
   padding-left: 0;
   margin-bottom: 20px;
   border-bottom: 1px solid #eee;
-  padding-bottom: 10px;
+  padding-bottom: 20px;
   button.btn.btn-xs.btn-danger.pull-right {
     position: relative;
     bottom: 24px;
@@ -18,12 +48,30 @@ h6 {
     margin-right: 5px;
   }
   h5 {
-    color: #444;
-    text-transform: uppercase;
+    color: white;
     font-weight: 400;
+    font-size: 1.4em;
+  }
+  h3 {
+    margin: 0;
+    background-color: #1F5064;
+    display: block;
+    padding: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: .6em;
+  }
+  a {
+    color: white;
+    font-family: 'Inconsolata', sans-serif;
+    cursor: pointer;
+  }
+  a:hover {
+    color: lightgrey;
   }
   p {
-    color: #777;
+    color: white;
+    margin: 10px 0;
   }
   span.glyphicon.glyphicon-user {
     margin-right: 6px;
@@ -31,5 +79,73 @@ h6 {
   a.editable-click {
     border-bottom: none;
   }
-
+  .sesh-descriptions {
+    font-family: 'Inconsolata', sans-serif;
+    font-size: 1.2em;
+  }
+  .sesh-descripter {
+    font-family: 'Inconsolata', sans-serif;
+    font-weight: 700;
+    color: white;
+    font-size: 1.2em;
+  }
+  .who-is-going-button {
+    background-color: #278A86;
+    font-family: 'Open Sans Condensed', sans-serif;
+    color: white;
+    border: none;
+    font-weight: 700;
+    padding: 8px;
+    letter-spacing: 1px;
+  }
+  li {
+    list-style: none;
+  }
+  .joined-sesh-list-container {
+    text-align: center;
+    background-color: rgba(250, 250, 250, 0.2);
+    border: 1px solid white;
+    font-size: 2em;
+    margin: 10px 0;
+  }
+  .editable-sesh {
+    text-decoration: underline;
+  }
+}
+.modal-header {
+  background-color: #278A86;
+  text-align: center;
+}
+.delete-button {
+  background-color: #B12041;
+  font-size: 17px;
+  border: none;
+  top: -40px;
+}
+.delete-button:hover {
+  background-color: #901A35;
+}
+.delete-button:focus {
+  background-color: #901A35;
+}
+.join-button {
+  background-color: #FC9B1B;
+  border: none;
+  font-size: 17px;
+  top: -40px;
+}
+.join-button:hover {
+  background-color: #CD811C;
+}
+.join-button:focus {
+  background-color: #CD811C;
+}
+.editable-buttons button {
+  background-color: #1F5064;
+  border: 1px white solid;
+}
+#joiners-length {
+  background-color: #94B4C1;
+  padding: 0px 4px;
+  border-radius: 9%;
 }

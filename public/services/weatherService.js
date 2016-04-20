@@ -5,14 +5,21 @@ angular
     // var key = '05b02278d73272e0e716626de5b875e4';
     // var weatherUrl = 'http://magicseaweed.com/api/' + key + '/forecast/?spot_id=760';
     var weatherUrl = '/weather';
+    var tidesUrl = '/tides';
 
-    function getWeather() {
-      return $http.get(weatherUrl);
-    };
+    function getWeather(city) {
+      return $http.get(weatherUrl + city);
+    }
+
+    function getTides(city) {
+      return $http.get(tidesUrl + city);
+    }
 
     return {
-      getWeather: getWeather
+      getWeather: getWeather,
+      getTides: getTides
     };
+
   });
 
    /* Your API details are below:

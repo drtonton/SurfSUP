@@ -1,102 +1,94 @@
-<h1>WELCOME TO SESSIONS, {{currentUser.username}}</h1>
-<h6>(edit your session by clicking links)</h6>
+<div class="sesh-activities-container">
+  <h1>WELCOME TO SESSIONS, {{currentUser.username}}</h1>
+  <!-- ADD SESSION BUTTON -->
+  <a href="/#/addSession">
+    <button class="add-session-button"
+            type="button"
+            name="button">Add a new session
+    </button>
+  </a>
+  <h6>(edit your session by clicking links)</h6>
+  <hr>
+  <div ng-repeat="seshActivities in seshActivity | orderBy: 'time '">
+    <!-- <session-reader seshActivities = "seshActivities"> </session-reader> -->
+    <!-- SESH INFORMATION -->
+    <div class="indiv-sesh-activities-container list-group ">
+        <h5 class="list-group-item-heading">
+            <span aria-hidden="true" class=
+            "glyphicon glyphicon-user">
+            </span>
+            <strong>{{seshActivities.user.username}}
+            </strong> is going <strong>{{seshActivities.isSurf ? 'Surfing' : 'Paddle Boarding'}} </strong>
+        </h5>
 
-<div  ng-repeat="seshActivities in seshActivity | orderBy: 'time '">
-  <!-- <session-reader seshActivities = "seshActivities"> </session-reader> -->
-  <!-- SESH INFORMATION -->
-  <div class="list-group">
-      <h5 class="list-group-item-heading">
-          <span aria-hidden="true" class=
-          "glyphicon glyphicon-user">
-          </span>
-          <strong>{{seshActivities.user.username}}
-          </strong> is going {{seshActivities.isSurf ? 'Surfing' : 'Paddle Boarding'}}
-      </h5>
+        <div class="edit-delete-sesh" ng-controller="UserController">
+            <p class="list-group-item-text" ng-if="currentUser.username!==seshActivities.user.username"> <span class="sesh-descripter">
+                Where: </span> <a class = "sesh-descriptions">{{seshActivities.location}}</a>
+                <a ng-click="showMap(seshActivities.id)" data-toggle="modal" data-target="#myModal">(view map)</a>
+            </p>
 
-      <div class="edit-delete-sesh" ng-controller="UserController">
-          <p class="list-group-item-text" ng-if="currentUser.username!==seshActivities.user.username">
-              Where: <button>{{seshActivities.location}}</button>
-              <a ng-click="showMap(seshActivities.id)" data-toggle="modal" data-target="#myModal">(map)</a>
-          </p>
+            <p class="list-group-item-text" ng-if="currentUser.username===seshActivities.user.username"> <span class="sesh-descripter">
+                Where: </span> <a class = "sesh-descriptions editable-sesh" editable-text="seshActivities.location" href="#" onaftersave=
+                "editSession(seshActivities)">{{seshActivities.location}}</a>
+                <a ng-click="showMap(seshActivities.id)" data-toggle="modal" data-target="#myModal">(view map)</a>
+            </p>
 
-          <p class="list-group-item-text" ng-if="currentUser.username===seshActivities.user.username">
-              Where: <a editable-text="seshActivities.location" href="#" onaftersave=
-              "editSession(seshActivities)">{{seshActivities.location}}</a>
-              <a ng-click="showMap(seshActivities.id)" data-toggle="modal" data-target="#myModal">(map)</a>
-          </p>
-
-          <!-- MODAL -->
-          </a>
-          <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                  <h4 class="modal-title" id="myModalLabel"><strong>{{seshActivities.user.username}}
-                  </strong> is going {{seshActivities.isSurf ? 'Surfing' : 'Paddle Boarding'}} at {{seshActivities.time | date : 'EEEE, MMMM d, h:mm a'}} </h4>
-                </div>
-                <div class="modal-body">
-                  <ui-gmap-google-map  draggable="true" center="seshMap.center" zoom="seshMap.zoom">
-                      <ui-gmap-marker coords="seshMarkers.coords" idKey="seshMarkers.id" dorebuildall="true" ></ui-gmap-marker>
-                  </ui-gmap-google-map>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary">Save changes</button>
+            <!-- MODAL -->
+            </a>
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <!-- <h4 class="modal-title" id="myModalLabel"><strong>{{seshActivities.user.username}}
+                    </strong> is going    <strong>  {{seshActivities.isSurf ? 'Surfing' : 'Paddle Boarding'}} </strong> on  {{seshActivities.time | date : 'EEEE, MMMM d, h:mm a'}} </h4> -->
+                  </div>
+                  <div class="modal-body">
+                    <ui-gmap-google-map  draggable="true" center="seshMap.center" zoom="seshMap.zoom">
+                        <ui-gmap-marker coords="seshMarkers.coords" idKey="seshMarkers.id" dorebuildall="true" ></ui-gmap-marker>
+                    </ui-gmap-google-map>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <p class="list-group-item-text" ng-if="currentUser.username!==seshActivities.user.username">
-              When: <a date-type="datetime" >{{seshActivities.time | date : 'EEEE, MMMM d, h:mm a'}}</a>
-          </p>
-          <p class="list-group-item-text" ng-if="currentUser.username===seshActivities.user.username">
-              When: <a date-type="datetime" editable-combodate="seshActivities.time" href="#" onaftersave=
-              "editSession(seshActivities)">{{seshActivities.time | date : 'EEEE, MMMM d, h:mm a'}}</a>
-          </p>
-      </div>
+            <p class="list-group-item-text" ng-if="currentUser.username!==seshActivities.user.username"><span class="sesh-descripter">
+                When: </span> <a class="sesh-descriptions" date-type="datetime" >{{seshActivities.time | date : 'EEEE, MMMM d, h:mm a'}}</a>
+            </p>
+            <p class=" list-group-item-text" ng-if="currentUser.username===seshActivities.user.username"><span class="sesh-descripter">
+                When: </span> <a class="sesh-descriptions editable-sesh" date-type="datetime" editable-combodate="seshActivities.time" href="#" onaftersave=
+                "editSession(seshActivities)">{{seshActivities.time | date : 'EEEE, MMMM d, h:mm a'}}</a>
+            </p>
+        </div>
+
+        <!-- DELETING AND JOINING SESH BUTTONS -->
+         <button class="delete-button btn btn-xs btn-danger pull-right" data-placement="bottom" data-toggle="tooltip"
+        name="button" ng-click="deleteSession(seshActivities.id)" ng-controller="UserController" ng-show=
+        "currentUser.username===seshActivities.user.username" onmouseenter="$(this).tooltip('show')" title=
+        "Delete Session" type="button"><span aria-hidden="true" class=
+        "glyphicon glyphicon-remove"></span></button>
+
+        <button class="join-button btn btn-xs btn-success pull-right"
+        data-toggle="tooltip" name="button" ng-click="joinSession(seshActivities.id)" ng-hide=
+        "currentUser.username===seshActivities.user.username" onmouseenter="$(this).tooltip('show')" title="Join Session" type=
+        "button"><span aria-hidden="true" class="glyphicon glyphicon-plus"></span></button>
+
+        <!-- JOINING SESH -->
+
+         <button class="who-is-going-button" ng-click="allGoingToSesh(seshActivities.id); showUsers = !showUsers">WHO IS GOING?</button>
+
+        <ul class="joined-sesh-list-container" ng-if="showUsers">
+            <h3><span id="joiners-length">{{usersGoingToSeshLength}}</span> Friends joining the sesh:</h3>
+            <li ng-repeat="user in usersGoingToSesh.data">{{user.username}}
+            </li>
+        </ul>
+      </button></span>
 
 
-      <!-- JOINING SESH -->
-       <span><button class="list-group-item-text" ng-click=
-      "allGoingToSesh(seshActivities.id); showUsers = !showUsers"><span>Who is going:</span> <!-- {{seshActivities.id}} -->
 
-      <ul ng-if="showUsers">
-          <li ng-repeat="user in usersGoingToSesh.data">{{user.username}}
-          </li>
-      </ul>
-    </button></span>
+    </div>
 
+  <!-- GOOGLE MAP -->
 
-      <!-- DELETING AND JOINING SESH BUTTONS -->
-       <button class="btn btn-xs btn-danger pull-right" data-placement="bottom" data-toggle="tooltip"
-      name="button" ng-click="deleteSession(seshActivities.id)" ng-controller="UserController" ng-show=
-      "currentUser.username===seshActivities.user.username" onmouseenter="$(this).tooltip('show')" title=
-      "Delete Session" type="button"><span aria-hidden="true" class=
-      "glyphicon glyphicon-remove"></span></button>
-
-      <button class="btn btn-xs btn-success pull-right"
-      data-toggle="tooltip" name="button" ng-click="joinSession(seshActivities.id)"  onmouseenter="$(this).tooltip('show')" title="Join Session" type=
-      "button"><span aria-hidden="true" class="glyphicon glyphicon-plus"></span></button>
   </div>
-
-<!-- GOOGLE MAP -->
-
 </div>
-
-<!-- ADD SESSION BUTTON -->
-<a href="/#/addSession">
-  <button class="btn btn-success"
-          type="button"
-          name="button">Add a session
-  </button>
-
-
-
-
-<!-- if (today.getDay() === new Date().getDay()) {
-  console.log('today is today')
-
-
-orderBy: 'time'

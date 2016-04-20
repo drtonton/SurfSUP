@@ -1,20 +1,84 @@
-#friendsListWrapper {
-  max-width: 400px;
+h1#PageHeadline {
+  font-family: 'Open Sans Condensed', sans-serif;
+  margin-bottom: 10px;
+  font-size: 40px;
+  font-weight: 600;
+  padding-top: 25px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #fff;
+}
+
+.searchBar {
+  text-align: center;
+  background-color: rgba(250,250,250, 1);
+  width: 300px;
   margin: 0 auto;
+  font-family: 'Inconsolata', sans-serif;
+  color: #278A86;
+  font-size: 16px;
+  text-transform: uppercase;
+}
+
+#searchBarWrapper {
+  text-align: center;
+}
+input#friendsSearchBar {
+  margin-top: 5px;
+  height: 30px;
+  min-width: 300px;
+  outline: none;
+  border: 1px solid white;
+  font-family: 'Inconsolata', sans-serif;
+  background-color: #ccc;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 1px;
+  font-size: 1.2em;
+  text-align: center;
+}
+input#friendsSearchBar:focus {
+  border: 1px solid white;
+}
+input#friendsSearchBar::-webkit-input-placeholder {
+color: white !important;
+}
+
+#friendsListWrapper {
+  max-width: 600px;
+  margin: 0 auto;
+  border-bottom: none;
   .viewProfileLink {
     display: inline-block;
     text-decoration: underline;
     text-align: center;
   }
+  .friendsHeader {
+    margin-top: 25px;
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+  a.list-group-item {
+    background-color: rgba(250,250,250, 0.1);
+    margin-bottom: 20px;
+  }
+  a.list-group-item:hover {
+    background-color: #278A86;
+  }
   #friendsListUserIcon {
     font-size: 30px;
   }
   #friendsListUsername {
-    vertical-align: 8px;
+    margin-left: 5px;
+    vertical-align: 5px;
+    font-size: 24px;
+    font-weight: bold;
   }
   .btn.btn-xs.btn-danger.pull-right.removeFriendBtn {
     position: relative;
     top: 8px;
+    background-color: #B12041;
   }
   #friendsListProfileLink {
     vertical-align: 8px;
@@ -22,8 +86,4 @@
   .friendsListInfo {
     display: inline-block;
   }
-}
-
-.searchBar {
-  position: absolute;
 }

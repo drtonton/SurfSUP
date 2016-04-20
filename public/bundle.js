@@ -265,7 +265,11 @@ angular
   .controller('NavbarController', function($scope,$location, $rootScope, FriendService, UserService) {
     $scope.profilePage = profilePage;
     $scope.logout = logout;
+    $scope.isLogin = isLogin;
 
+    function isLogin() {
+      return $location.path() !== '/login' && $location.path() !== '/create';
+    }
     $scope.$on('requestAmt:added', function(data) {
       FriendService.requestAmt();
       FriendService.requestList()
@@ -298,45 +302,35 @@ angular
 },{}],5:[function(require,module,exports){
 angular
   .module('surfSup')
-  .controller('ProfileController', function($scope,$location, FriendService, $routeParams,$rootScope) {
+  .controller('ProfileController', function($scope,$location, FriendService, $routeParams,$rootScope, UserService) {
     $location.path() === "/login" || $location.path() === "/create" ? $rootScope.showBar = false : $rootScope.showBar = true;
+
     $scope.sendInvite = sendInvite;
     $scope.hideAddButton = hideAddButton;
 
-      // GET FRIENDS PROFILE
+      // GET FRIENDS PROFILE & RUN HIDE ADD FRIEND BUTTON FUNCTION
       FriendService.getProfile($routeParams.id)
       .then(function(data) {
-        // console.log('friend profile info: ', data.data);
         $scope.profiles = data.data;
         FriendService.friendsList()
           .success(function(friends){
-            // console.log('before map function: ', friends);
             var friendsIdList = _.map(friends, function(el) {
               return el.id;
             });
-            // console.log('$routeParams.id:', $routeParams.id);
-            // console.log('friendsIdList:',friendsIdList);
             if(friendsIdList.indexOf(+$routeParams.id) !== -1) {
-              // Hide button here.
-              // console.log('inside indexof method');
               hideAddButton();
-            }
-          })
+            } else {
+                UserService.currentUser().then(function(data) {
+                  $scope.currentUser = data.data;
+                  if(+$routeParams.id === $scope.currentUser.id) {
+                    hideAddButton();
+                  };
+                });
+              };
+          });
       },function(err) {
         console.log("THIS IS AN ERROR",err);
       });
-
-      // GET CURRENT USER PROFILE
-      FriendService.getProfile($routeParams.id)
-      .then(function(data) {
-        $scope.profiles = data.data;
-        console.log('getProfile', $scope.profiles.id )
-        console.log('$routeParams.id', $routeParams.id)
-      }).then(function() {
-        if(+$routeParams.id === $scope.profiles.id) {
-          hideAddButton();
-        }
-      })
 
       // HIDE ADD BUTTON ON FRIENDS PROFILE PAGE
       function hideAddButton () {
@@ -480,6 +474,7 @@ angular
           .success(function(data) {
             CacheEngine.put('seshActivity', data);
             $scope.seshActivity = data.data;
+
           })
           .error(function(err) {
             console.log('you are already going to this sesh', err);
@@ -494,6 +489,7 @@ angular
         .then(function(data) {
           console.log('all going to sesh in ctrl:', data);
           $scope.usersGoingToSesh = data;
+          $scope.usersGoingToSeshLength = data.data.length;
           // console.log('data', data.data.username);
         });
         // .then(function() {
@@ -551,7 +547,7 @@ function showMap(id) {
      var markers = response.data;
 
      markers.coords = {
-       idKey: markers.id,
+      //  idKey: markers.id,
        id: markers.id,
        latitude: markers.lat,
        longitude: markers.lon,
@@ -605,6 +601,7 @@ angular
     $scope.acctObj = {};
     $scope.submitForm = submitForm;
     $scope.getWeatherData = getWeatherData;
+    $scope.getTideData = getTideData;
     $scope.getCurrentUser = getCurrentUser;
 
 
@@ -646,18 +643,34 @@ angular
       getCurrentUser();
     });
 
+    // CITY VARIABLES FOR WEATHER AND TIDE FUNCTIONS
+    $scope.pawleys = 'Pawleys'
+    $scope.iop = 'IOP';
+    $scope.washout = 'Washout';
+    $scope.pawley = 'Pawley';
 
     //GET WEATHER DATA
-    function getWeatherData() {
-      console.log('in getWeatherData function');
-      WeatherService.getWeather()
+    function getWeatherData(city) {
+      WeatherService.getWeather(city)
         .then(function(data) {
           console.log(data);
-          window.glob = data.data;
+          // window.glob = data.data;
           $scope.weatherData = data.data;
         });
     }
-    getWeatherData();
+    getWeatherData($scope.iop);
+
+    //GET TIDE DATA
+    function getTideData(city) {
+      console.log('in getTideData', city);
+      WeatherService.getTides(city)
+        .then(function(data) {
+          console.log('tide data',data, 'city ', city);
+          window.glob = data.data.extremes;
+          $scope.tideData = data.data.extremes;
+        });
+    }
+    getTideData($scope.iop);
 
 
   }); // end of LoginController
@@ -75596,14 +75609,21 @@ angular
     // var key = '05b02278d73272e0e716626de5b875e4';
     // var weatherUrl = 'http://magicseaweed.com/api/' + key + '/forecast/?spot_id=760';
     var weatherUrl = '/weather';
+    var tidesUrl = '/tides';
 
-    function getWeather() {
-      return $http.get(weatherUrl);
-    };
+    function getWeather(city) {
+      return $http.get(weatherUrl + city);
+    }
+
+    function getTides(city) {
+      return $http.get(tidesUrl + city);
+    }
 
     return {
-      getWeather: getWeather
+      getWeather: getWeather,
+      getTides: getTides
     };
+
   });
 
    /* Your API details are below:

@@ -1,12 +1,23 @@
-<h1>PROFILE PAGE</h1>
-<hr>
-<div>
-  username: {{profiles.username}}
-  <button
-  ng-hide="dontShowButton"
-  type="button"
-  class="btn btn-default"
-  ng-click = "sendInvite(profiles.username)"
-  name="button">add friend</button>
-  <div id="requestFriendAlert"></div>
-</div>
+<h1 id="profileHeadline" >PROFILE PAGE</h1>
+<hr id="profileHr">
+  <div id="profileWrapper" class="">
+    <div>
+      <span aria-hidden="true" class=
+    "glyphicon glyphicon-user profilePic">
+      </span>
+    </div>
+    <h2 id="profileUsername">{{profiles.username}}</h2>
+    <div class="profileUsernameUnderline"></div>
+    <h4 class="profileInfo" id="profileName">{{profiles.firstName}} {{profiles.lastName}}</h4>
+    <h4 class="profileInfo" id="profilePhone"><a href="tel:{{profiles.phone}}" >{{profiles.phone}}</a></h4>
+    <h4 class="profileInfo" id="profileEmail"><a href="mailto:{{profiles.email}}" >{{profiles.email}}</a></h4>
+
+    <button
+    ng-hide="dontShowButton"
+    type="button"
+    id="addFriendButton"
+    class="btn btn-default btn-block"
+    ng-click = "sendInvite(profiles.username)"
+    name="button">add friend</button>
+    <div id="requestFriendAlert"></div>
+  </div>

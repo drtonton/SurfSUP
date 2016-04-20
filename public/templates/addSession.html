@@ -1,59 +1,63 @@
-<a href="/#/home"><button class="pull-right btn btn-danger" type="button" name="button">Back</button></a>
-<form class="form" name="form" novalidate>
-  <h1>Add Session</h1>
-  <div class="form-group">
-    <button class="surf-sup-button" ng-class="{'active': isActiveSurf}" type="button" ng-click="suppy = true; activeButtonSurf()" name="button">Surf</button>
-    <button class="surf-sup-button" ng-class="{'active': isActiveSUP}" type="button" ng-click="suppy = false; activeButtonSUP()" name="button">SUP</button>
-  </div>
-  <div ng-show="submitted && !buttonsClicked" >
-    <div class="alert alert-danger">
-      Must Select Activity
-    </div>
-  </div>
-  </br>
+<div class="add-sessions-container">
+      <h1>Add Session</h1>
+      <hr class="orange-line">
+  <!-- <a href="/#/home"><button class="pull-right btn btn-danger" type="button" name="button">Back</button></a> -->
+  <form class="form add-session-form" name="form" novalidate>
+    <div class="surf-sup-button-container">
+      <button class="surf-sup-button" ng-class="{'active': isActiveSurf}" type="button" ng-click="suppy = true; activeButtonSurf()" name="button">Surf</button>
 
-  <!-- MAP READER -->
-  <!-- <map-reader></map-reader> -->
+      <button class="surf-sup-button" ng-class="{'active': isActiveSUP}" type="button" ng-click="suppy = false; activeButtonSUP()" name="button">SUP</button>
+    </div>
+    <div ng-show="submitted && !buttonsClicked" >
+      <div class="alert alert-danger">
+        Must Select Activity
+      </div>
+    </div>
+    </br>
 
-  <div>
-      <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" events="map.events">
-          <ui-gmap-marker ng-repeat="m in map.markers" coords="m.coords" icon="m.icon" idkey="m.id" ></ui-gmap-marker>
-      </ui-gmap-google-map>
-  </div>
+    <!-- MAP READER -->
+    <!-- <map-reader></map-reader> -->
 
-  <div class="form-group" >
-    <input class="form-control" ng-model="location" type="text" name="location" placeholder="Enter Location" required>
-  </div>
-  <div ng-show="submitted && form.$invalid" >
-    <div ng-show="form.location.$error.required" class="alert alert-danger">
-      location is Required
+    <div class="map-container">
+        <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" events="map.events">
+            <ui-gmap-marker ng-repeat="m in map.markers" coords="m.coords" icon="m.icon" idkey="m.id" ></ui-gmap-marker>
+        </ui-gmap-google-map>
     </div>
-  </div>
-  <div class="form-group">
-    <input class="form-control" ng-model="time" type="datetime-local" name="time" required>
-  </div>
-  <div ng-show="submitted && form.$invalid" >
-    <div ng-show="form.time.$error.required" class="alert alert-danger">
-      time is Required
+
+    <div class="form-group " >
+      <input class="main-input form-control" ng-model="location" type="text" name="location" placeholder="Enter Location Title" required>
     </div>
-  </div>
-  <div id="sessionTime"></div>
-  <div class="btn-group">
-    <button type="button" class="btn btn-secondary dropdown-toggle btn-block" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      Invite Friends
-    </button>
-    <div class="dropdown-menu">
-      <a class="dropdown-item" href="#">Action</a>
-      <a class="dropdown-item" href="#">Another action</a>
-      <a class="dropdown-item" href="#">Something else here</a>
-      <div class="dropdown-divider"></div>
-      <a class="dropdown-item" href="#">Separated link</a>
+    <div ng-show="submitted && form.$invalid" >
+      <div ng-show="form.location.$error.required" class="alert alert-danger">
+        location is Required
+      </div>
     </div>
-  </div>
-  <div class="btn-group">
-    <!-- <button class="btn btn-md btn-success" ng-click ="addSesh(); submitted=true" type="submit" class="submit-button">Submit</button>
-      or <a href="/#/home">Cancel</a> -->
-    <button class="btn btn-md btn-success btn-block" ng-click ="addSesh(); submitted=true" type="button" name="button">Submit</button>
-  </div>
-  </br>
-</form>
+    <div class="form-group">
+      <input class="main-input form-control" ng-model="time" type="datetime-local" name="time" required>
+    </div>
+    <div ng-show="submitted && form.$invalid" >
+      <div ng-show="form.time.$error.required" class="alert alert-danger">
+        time is Required
+      </div>
+    </div>
+    <div id="sessionTime"></div>
+    <!-- <div class="btn-group">
+      <button type="button" class="btn btn-secondary dropdown-toggle btn-block" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Invite Friends
+      </button>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="#">Action</a>
+        <a class="dropdown-item" href="#">Another action</a>
+        <a class="dropdown-item" href="#">Something else here</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#">Separated link</a>
+      </div>
+    </div> -->
+
+      <!-- <button class="btn btn-md btn-success" ng-click ="addSesh(); submitted=true" type="submit" class="submit-button">Submit</button>
+        or <a href="/#/home">Cancel</a> -->
+      <button class="submit-session-button" ng-click ="addSesh(); submitted=true" type="button" name="button">Submit</button>
+
+    </br>
+  </form>
+</div>

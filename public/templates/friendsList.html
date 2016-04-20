@@ -1,19 +1,21 @@
 
 <!-- USER LIST -->
-
-<input ng-model="queryFriend" ng-change="searchFriends(queryFriend)" type="text" name="name" placeholder="">
+<h1 id="PageHeadline">Friends</h1>
+<div class="headlineUnderline"></div>
+<div id="searchBarWrapper">
+  <input id="friendsSearchBar" ng-model="queryFriend" ng-change="searchFriends(queryFriend)" type="text" name="name" placeholder="Search for friends">
+</div>
 <div class="searchBar" ng-show="queryFriend.length > 1" ng-repeat=" user in listUsers | filter:queryFriend:strict" ng-click="profilePage(user.id)" >
   {{user.username}}
   <!-- <button type="button" class="btn btn-default" ng-click = "sendInvite(user.username)" name="button">add friend</button> -->
   <div id="requestFriendAlert"></div>
 </div>
 
-
 <!-- INDIVIDUAL FRIEND -->
-
 <div id="friendsListWrapper" class="list-group">
-  <a ng-repeat="friend in friendsList" class="list-group-item">
-    <div class="friendsListInfo" ng-click="profilePage(friend.id)">
+  <h4 class="friendsHeader">Your Friends:</h4>
+  <a id="friendInfoWrapper" ng-repeat="friend in friendsList" class="list-group-item" ng-click="profilePage(friend.id)">
+    <div class="friendsListInfo" >
       <span id="friendsListUserIcon" class="glyphicon glyphicon-user"></span>
       <span id="friendsListUsername">{{friend.username}}</span>
       <!-- <span id="friendsListProfileLink"><a class="viewProfileLink" href="">View Profile</a></span> -->
