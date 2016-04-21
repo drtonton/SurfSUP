@@ -37,7 +37,7 @@
   h1 {
     margin: 0;
     padding: 20px 0;
-    font-family: 'Inconsolata', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: 2em;
     color: white;
   }
@@ -50,8 +50,8 @@ form {
   color: #7d7d7d;
   h1 {
 
-    font-family: 'Inconsolata', sans-serif;
-    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
     text-align: center;
     font-size: 1.6em;
     letter-spacing: 1px;
@@ -65,7 +65,7 @@ form {
     -webkit-box-shadow: none !important;
     -moz-box-shadow: none !important;
     box-shadow: none !important;
-    font-family: 'Inconsolata', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     color: grey;
   }
   input.form-control,input.form-control:-webkit-autofill {
@@ -77,7 +77,8 @@ form {
 
   .create-form {
     max-width: 465px;
-    font-family: 'Inconsolata', sans-serif;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
   }
 
   .create-form input {
@@ -89,7 +90,8 @@ form {
   }
 
   .create-form label {
-    font-family: 'Inconsolata', sans-serif;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
     text-transform: uppercase;
     letter-spacing: 1px;
     font-size: 1em;
@@ -101,7 +103,7 @@ form {
       box-shadow: none;
       border: none;
       color: white;
-      font-family: 'Inconsolata', sans-serif;
+      font-family: 'Montserrat', sans-serif;
       color: white;
       text-transform: uppercase;
       width: 135px;
@@ -144,9 +146,10 @@ form {
     opacity: 0.9;
   }
   #create-form-link {
-    font-size: 1.3em;
+    font-size: 1em;
     text-transform: uppercase;
-    font-family: 'Inconsolata', sans-serif;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
   }
   #main-input {
 
@@ -155,7 +158,8 @@ form {
   }
   label {
     text-transform: uppercase;
-    font-family: 'Inconsolata', sans-serif;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
     font-size: 1.3em;
   }
 

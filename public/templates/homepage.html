@@ -1,51 +1,44 @@
-<!-- <nav class="navbar navbar-light bg-faded">
-  <a class="navbar-brand" href="#">SurfSUP</a>
-</nav> -->
-
-<!-- <div>
-  <button ng-click="logout()" class="btn btn-md btn-danger pull-right" type="button" name="button">Logout</button>
-</div> -->
-    <h1 id="PageHeadline">Today's Weather</h1>
-    <div class="headlineUnderline"></div>
-    <ul class="">
-        <li class="cityLink" ><a href="" ng-click="getWeatherData(iop); getTideData(iop);">Isle Of Palms</a></li>
-        <li class="cityLink middleLink" ><a href="" ng-click="getWeatherData(washout); getTideData(washout);">Folly Beach</a></li>
-        <li class="cityLink" ><a href="" ng-click="getWeatherData(pawley); getTideData(pawleys);">Pawleys Island</a></li>
-    </ul>
-    <div class="tableWrapper">
-      <!-- <h3></h3> -->
-      <table class="table table-bordered">
-        <thead>
-       <tr id="weatherHeaders">
-         <th class="time-column">TIME</th>
-         <th class="surf-column">SURF</th>
-         <th class="wind-column">WIND</th>
-         <th class="temp-column">TEMP</th>
-       </tr>
-     </thead>
-        <tr ng-repeat="weather in weatherData | limitTo: 6" >
-          <td class="time-weather-data" id="timeStamp">{{weather.localTimestamp * 1000 | date:'ha'}}</td>
-          <td class="weather-data">{{weather.swell.maxBreakingHeight}}ft</td>
-          <td class="weather-data">{{weather.wind.compassDirection}} {{weather.wind.speed}}mph</td>
-          <td class="weather-data">{{weather.condition.temperature}}</td>
-        </tr>
-      </table>
-      <h3 id="tideHeadline" >Next 4 tides</h3>
-      <div class="weatherUnderline"></div>
-      <table class="table table-bordered">
-        <thead>
-       <tr id="weatherHeaders">
-         <th>TIDE</th>
-         <th>TIME</th>
-       </tr>
-     </thead>
-        <tr ng-repeat="tide in tideData | limitTo: 4" >
-          <td id="timeStamp">{{tide.type}}</td>
-          <td>{{tide.dt * 1000 | date:'EEE h:mm a'}}</td>
-        </tr>
-      </table>
-      <div class="btn-group btn-group" role="group">
-        <a href="/#/addSession"><button id="weatherPageBtn" class="btn btn-default" type="button" name="button">Add Session</button></a>
-        <a href="/#/sessions"><button id="weatherPageBtn" class="btn btn-default" type="button" name="button">Go To Sessions</button></a>
-      </div>
-      </div>
+<h1 id="PageHeadline">Today's Weather</h1>
+<div class="headlineUnderline"></div>
+<ul class="">
+    <li class="cityLink" ><a href="" ng-class="{active: clicky==='iop'}" ng-click="getWeatherData(iop); getTideData(iop); isClicked('iop');" >Isle Of Palms</a></li>
+    <li class="cityLink middleLink" ><a href="" ng-class="{active: clicky==='washout'}" ng-click="getWeatherData(washout); getTideData(washout); isClicked('washout');">Folly Beach</a></li>
+    <li class="cityLink" ><a href="" ng-class="{active: clicky==='pawleys'}" ng-click="getWeatherData(pawley); getTideData(pawleys); isClicked('pawleys');">Pawleys Island</a></li>
+</ul>
+<div class="tableWrapper">
+  <!-- <h3></h3> -->
+  <table class="table table-bordered">
+    <thead>
+   <tr id="weatherHeaders">
+     <th class="time-column">TIME</th>
+     <th class="surf-column">SURF</th>
+     <th class="wind-column">WIND</th>
+     <th class="temp-column">AIR TEMP</th>
+   </tr>
+ </thead>
+    <tr ng-repeat="weather in weatherData | limitTo: 6" >
+      <td class="time-weather-data" id="timeStamp">{{weather.localTimestamp * 1000 | date:'ha'}}</td>
+      <td class="weather-data">{{weather.swell.maxBreakingHeight}}ft</td>
+      <td class="weather-data">{{weather.wind.compassDirection}} {{weather.wind.speed}}mph</td>
+      <td class="weather-data">{{weather.condition.temperature}}</td>
+    </tr>
+  </table>
+  <h3 id="tideHeadline" >Next 4 tides</h3>
+  <div class="weatherUnderline"></div>
+  <table class="table table-bordered">
+    <thead>
+   <tr id="weatherHeaders">
+     <th>TIDE</th>
+     <th>TIME</th>
+   </tr>
+ </thead>
+    <tr ng-repeat="tide in tideData | limitTo: 4" >
+      <td id="timeStamp">{{tide.type}}</td>
+      <td>{{tide.dt * 1000 | date:'EEE h:mm a'}}</td>
+    </tr>
+  </table>
+  <div class="btn-group btn-group" role="group">
+    <a href="/#/addSession"><button id="weatherPageBtn" class="btn btn-default" type="button" name="button">Add Session</button></a>
+    <a href="/#/sessions"><button id="weatherPageBtn" class="btn btn-default" type="button" name="button">Go To Sessions</button></a>
+  </div>
+  </div>

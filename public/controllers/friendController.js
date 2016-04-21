@@ -7,13 +7,14 @@ angular
 
 
     $scope.searchFriends = searchFriends;
-    $scope.getRequestList = getRequestList;
-    $scope.getFriendsList = getFriendsList;
-    $scope.denyFriendRequest = denyFriendRequest;
-    $scope.acceptInvite = acceptInvite;
     $scope.deleteFriendFromList = deleteFriendFromList;
-    $scope.profilePage = profilePage;
     // $scope.requestList = requestList;
+    $scope.getFriendsList = getFriendsList;
+
+    // SEARCH FRIENDS
+    function searchFriends(friend) {
+      FriendService.findFriends(friend);
+    }
 
     // GET FRIENDS LIST
     function getFriendsList() {
@@ -34,48 +35,6 @@ angular
       });
     });
 
-    // GET REQUEST AMOUNT
-    function getRequestAmt() {
-      FriendService.requestAmt()
-        .then(function(data) {
-          $rootScope.requests = data.data;
-          // $rootScope.$apply();
-          // console.log('friend request amt:', data);
-        });
-    }
-    getRequestAmt();
-
-    // GET REQUEST LIST
-    function getRequestList() {
-      FriendService.requestList()
-        .success(function(data) {
-          $rootScope.requestList = data;
-          // window.glob = data.data;
-        })
-        .error (function(err) {
-          console.log(err);
-        });
-    }
-    getRequestList();
-
-    // DENY FRIEND REQUEST
-    function denyFriendRequest (id) {
-      FriendService.denyRequest(id)
-        .then(function(data) {
-          var objId = id;
-          var objPlace = $rootScope.requestList.findIndex (function(el,idx,arr){
-            return el.id === objId;
-          });
-          $rootScope.requestList.splice (objPlace, 1);
-          // console.log('sessions deleted', objPlace);
-      });
-    }
-
-    // SEARCH FRIENDS
-    function searchFriends(friend) {
-      FriendService.findFriends(friend);
-    }
-
     // FIND FRIENDS (USERS)
     FriendService.findFriends()
     .then(function(data) {
@@ -83,32 +42,6 @@ angular
       $scope.listUsers = data.data;
       // console.log('users list is working,', data);
     });
-
-    // SEND INVITATION TO FRIEND
-    // function sendInvite (username) {
-    //   // console.log(username);
-    //   FriendService.friendInvitation(username)
-    //   .success(function(data) {
-    //     console.log('send invite is working,', data);
-    //   })
-    //   .error (function(err) {
-    //     console.log('this friend has already been invited', err);
-    //     $('#requestFriendAlert').html('<div class="alert alert-danger" role="alert">You have already sent this friend a request.</div>');
-    //   });
-    // }
-
-    // ACCEPT FRIEND INVITE
-    function acceptInvite (username) {
-      console.log(username);
-      FriendService.acceptInvitation(username)
-      .success(function(data) {
-        // console.log('accept friends is working,', data);
-        $rootScope.$broadcast('requestAmt:added',data.data);
-      })
-      .error (function(err) {
-        console.log(err);
-      });
-    }
 
     // DELETE FRIEND FROM FRIEND LIST
     function deleteFriendFromList(id) {

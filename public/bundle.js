@@ -25,7 +25,7 @@ angular
     $routeProvider
       .when('/home', {
         templateUrl: "templates/homepage.html",
-        controller: "UserController",
+        controller: "WeatherController",
       })
       .when('/', {
         redirectTo: '/login'
@@ -76,12 +76,13 @@ require('./controllers/userController');
 require('./controllers/sessionController');
 require('./controllers/friendController');
 require('./controllers/navbar.controller');
+require('./controllers/profile.controller');
+require('./controllers/weather.controller');
 require('./controllers/mapController');
 require ('./directives/sessionDirective');
 require ('./directives/mapDirective');
-require('./controllers/profile.controller');
 
-},{"./controllers/friendController":2,"./controllers/mapController":3,"./controllers/navbar.controller":4,"./controllers/profile.controller":5,"./controllers/sessionController":6,"./controllers/userController":7,"./directives/mapDirective":8,"./directives/sessionDirective":9,"./services/cacheEngineService":25,"./services/friendService":26,"./services/sessionService":27,"./services/userService":28,"./services/weatherService":29,"./xeditable":30,"angular":19,"angular-google-maps":10,"angular-route":12,"angular-simple-logger":13,"angular-ui-mask":17,"jquery":22,"lodash":23}],2:[function(require,module,exports){
+},{"./controllers/friendController":2,"./controllers/mapController":3,"./controllers/navbar.controller":4,"./controllers/profile.controller":5,"./controllers/sessionController":6,"./controllers/userController":7,"./controllers/weather.controller":8,"./directives/mapDirective":9,"./directives/sessionDirective":10,"./services/cacheEngineService":26,"./services/friendService":27,"./services/sessionService":28,"./services/userService":29,"./services/weatherService":30,"./xeditable":31,"angular":20,"angular-google-maps":11,"angular-route":13,"angular-simple-logger":14,"angular-ui-mask":18,"jquery":23,"lodash":24}],2:[function(require,module,exports){
 angular
   .module('surfSup')
   .controller('FriendController', function($scope,$q, $location, FriendService, $rootScope,SessionService) {
@@ -91,13 +92,14 @@ angular
 
 
     $scope.searchFriends = searchFriends;
-    $scope.getRequestList = getRequestList;
-    $scope.getFriendsList = getFriendsList;
-    $scope.denyFriendRequest = denyFriendRequest;
-    $scope.acceptInvite = acceptInvite;
     $scope.deleteFriendFromList = deleteFriendFromList;
-    $scope.profilePage = profilePage;
     // $scope.requestList = requestList;
+    $scope.getFriendsList = getFriendsList;
+
+    // SEARCH FRIENDS
+    function searchFriends(friend) {
+      FriendService.findFriends(friend);
+    }
 
     // GET FRIENDS LIST
     function getFriendsList() {
@@ -118,48 +120,6 @@ angular
       });
     });
 
-    // GET REQUEST AMOUNT
-    function getRequestAmt() {
-      FriendService.requestAmt()
-        .then(function(data) {
-          $rootScope.requests = data.data;
-          // $rootScope.$apply();
-          // console.log('friend request amt:', data);
-        });
-    }
-    getRequestAmt();
-
-    // GET REQUEST LIST
-    function getRequestList() {
-      FriendService.requestList()
-        .success(function(data) {
-          $rootScope.requestList = data;
-          // window.glob = data.data;
-        })
-        .error (function(err) {
-          console.log(err);
-        });
-    }
-    getRequestList();
-
-    // DENY FRIEND REQUEST
-    function denyFriendRequest (id) {
-      FriendService.denyRequest(id)
-        .then(function(data) {
-          var objId = id;
-          var objPlace = $rootScope.requestList.findIndex (function(el,idx,arr){
-            return el.id === objId;
-          });
-          $rootScope.requestList.splice (objPlace, 1);
-          // console.log('sessions deleted', objPlace);
-      });
-    }
-
-    // SEARCH FRIENDS
-    function searchFriends(friend) {
-      FriendService.findFriends(friend);
-    }
-
     // FIND FRIENDS (USERS)
     FriendService.findFriends()
     .then(function(data) {
@@ -167,32 +127,6 @@ angular
       $scope.listUsers = data.data;
       // console.log('users list is working,', data);
     });
-
-    // SEND INVITATION TO FRIEND
-    // function sendInvite (username) {
-    //   // console.log(username);
-    //   FriendService.friendInvitation(username)
-    //   .success(function(data) {
-    //     console.log('send invite is working,', data);
-    //   })
-    //   .error (function(err) {
-    //     console.log('this friend has already been invited', err);
-    //     $('#requestFriendAlert').html('<div class="alert alert-danger" role="alert">You have already sent this friend a request.</div>');
-    //   });
-    // }
-
-    // ACCEPT FRIEND INVITE
-    function acceptInvite (username) {
-      console.log(username);
-      FriendService.acceptInvitation(username)
-      .success(function(data) {
-        // console.log('accept friends is working,', data);
-        $rootScope.$broadcast('requestAmt:added',data.data);
-      })
-      .error (function(err) {
-        console.log(err);
-      });
-    }
 
     // DELETE FRIEND FROM FRIEND LIST
     function deleteFriendFromList(id) {
@@ -266,6 +200,52 @@ angular
     $scope.profilePage = profilePage;
     $scope.logout = logout;
     $scope.isLogin = isLogin;
+    $scope.getRequestAmt = getRequestAmt;
+    // $scope.getFriendsList = getFriendsList;
+    $scope.getRequestList = getRequestList;
+    $scope.getCurrentUser = getCurrentUser;
+    $scope.denyFriendRequest = denyFriendRequest;
+    $scope.acceptInvite = acceptInvite;
+
+    // // GET FRIENDS LIST
+    // function getFriendsList() {
+    //   FriendService.friendsList()
+    //     .success(function(data){
+    //       console.log("FRINEDS LIST", data);
+    //       $rootScope.myFriends = data.data;
+    //       $rootScope.$broadcast('friendList:added', data.data);
+    //     });
+    // }
+    // getFriendsList();
+    //
+    // // FRIENDS LIST AUTO UPDATE
+    // $scope.$on('friendList:added', function(data) {
+    //   FriendService.friendsList()
+    //   .then(function(data) {
+    //     $scope.friendsList = data.data;
+    //   });
+    // });
+
+    // GET REQUEST AMOUNT
+    function getRequestAmt() {
+      FriendService.requestAmt()
+        .then(function(data) {
+          $rootScope.requests = data.data;
+        });
+    }
+    getRequestAmt();
+
+    // GET REQUEST LIST
+    function getRequestList() {
+      FriendService.requestList()
+        .success(function(data) {
+          $rootScope.requestList = data;
+        })
+        .error (function(err) {
+          console.log(err);
+        });
+    }
+    getRequestList();
 
     function isLogin() {
       return $location.path() !== '/login' && $location.path() !== '/create';
@@ -286,15 +266,59 @@ angular
         // $rootScope.$apply();
       });
     });
+
+    $scope.$on('requestAmt:added', function () {
+      getCurrentUser();
+    });
+
+
     function profilePage(id) {
       console.log('ID', id);
       $location.path('/profile/' + id);
     }
+
+
     function logout() {
       UserService.logoutUser();
       console.log('logging out');
       $location.path('/login');
     }
+
+    // GET CURRENT USER
+    function getCurrentUser() {
+      UserService.currentUser().then(function(data) {
+        $scope.currentUser = data.data;
+      });
+    }
+    getCurrentUser();
+
+    // DENY FRIEND REQUEST
+    function denyFriendRequest (id) {
+      FriendService.denyRequest(id)
+        .then(function(data) {
+          var objId = id;
+          var objPlace = $rootScope.requestList.findIndex (function(el,idx,arr){
+            return el.id === objId;
+          });
+          $rootScope.requestList.splice (objPlace, 1);
+          // console.log('sessions deleted', objPlace);
+      });
+    }
+
+    // ACCEPT FRIEND INVITE
+    function acceptInvite (username) {
+      console.log(username);
+      FriendService.acceptInvitation(username)
+      .success(function(data) {
+        // console.log('accept friends is working,', data);
+        $rootScope.$broadcast('requestAmt:added',data.data);
+      })
+      .error (function(err) {
+        console.log(err);
+      });
+    }
+
+
 
 
   }); // end of NavbarControler
@@ -539,7 +563,10 @@ angular
 //GOOGLE MAPS ON SESSIONS PAGE
 
 $scope.seshMarkers = [];
-function showMap(id) {
+function showMap(id,name,type) {
+
+  $scope.modalName = name;
+  $scope.modalType = type;
    SessionService.getCoords(id)
    .then(function(response) {
      console.log("show map is working", response);
@@ -600,9 +627,6 @@ angular
     $scope.login = login;
     $scope.acctObj = {};
     $scope.submitForm = submitForm;
-    $scope.getWeatherData = getWeatherData;
-    $scope.getTideData = getTideData;
-    $scope.getCurrentUser = getCurrentUser;
 
 
     // LOGIN PAGE
@@ -631,17 +655,22 @@ angular
       });
     }
 
-    // GET CURRENT USER
-    function getCurrentUser() {
-      UserService.currentUser().then(function(data) {
-        $scope.currentUser = data.data;
-      });
-    }
-    getCurrentUser();
 
-    $scope.$on('requestAmt:added', function () {
-      getCurrentUser();
-    });
+
+  }); // end of LoginController
+
+},{}],8:[function(require,module,exports){
+angular
+  .module('surfSup')
+  .controller('WeatherController', function($scope, $location, $rootScope, WeatherService) {
+    $location.path() === "/login" || $location.path() === "/create" ? $rootScope.showBar = false : $rootScope.showBar = true;
+
+    $scope.getWeatherData = getWeatherData;
+    $scope.getTideData = getTideData;
+    $scope.isClicked = function(city) {
+      console.log('isClicked is being clicked');
+      $scope.clicky = city;
+    }
 
     // CITY VARIABLES FOR WEATHER AND TIDE FUNCTIONS
     $scope.pawleys = 'Pawleys'
@@ -653,8 +682,7 @@ angular
     function getWeatherData(city) {
       WeatherService.getWeather(city)
         .then(function(data) {
-          console.log(data);
-          // window.glob = data.data;
+          console.log('in getWeatherData',data);
           $scope.weatherData = data.data;
         });
     }
@@ -662,20 +690,18 @@ angular
 
     //GET TIDE DATA
     function getTideData(city) {
-      console.log('in getTideData', city);
       WeatherService.getTides(city)
         .then(function(data) {
-          console.log('tide data',data, 'city ', city);
-          window.glob = data.data.extremes;
+          console.log('in getTideData',data);
           $scope.tideData = data.data.extremes;
         });
     }
     getTideData($scope.iop);
 
 
-  }); // end of LoginController
+  }); // end of WeatherController
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 angular
 .module ('surfSup')
 .directive ('mapReader', function (){
@@ -688,7 +714,7 @@ angular
   };
 });
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 angular
 .module ('surfSup')
 .directive ('sessionReader', function (){
@@ -702,7 +728,7 @@ angular
   };
 });
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 /*! angular-google-maps 2.3.2 2016-02-11
  *  AngularJS directives for Google Maps
  *  git: https://github.com/angular-ui/angular-google-maps.git
@@ -16389,7 +16415,7 @@ angular.module('uiGmapgoogle-maps.extensions')
   };
 }]);
 }( window,angular));
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.3
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -17413,11 +17439,11 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 
 })(window, window.angular);
 
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 require('./angular-route');
 module.exports = 'ngRoute';
 
-},{"./angular-route":11}],13:[function(require,module,exports){
+},{"./angular-route":12}],14:[function(require,module,exports){
 /**
  *  angular-simple-logger
  *
@@ -17565,7 +17591,7 @@ angular.module('nemLogging').provider('nemSimpleLogger', [
   }
 ]);
 
-},{"angular":15,"debug":20}],14:[function(require,module,exports){
+},{"angular":16,"debug":21}],15:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.3
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -48280,11 +48306,11 @@ $provide.value("$locale", {
 })(window, document);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":14}],16:[function(require,module,exports){
+},{"./angular":15}],17:[function(require,module,exports){
 /*!
  * angular-ui-mask
  * https://github.com/angular-ui/ui-mask
@@ -49021,7 +49047,7 @@ angular.module('ui.mask', [])
         ]);
 
 }());
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 //https://github.com/angular/angular.js/pull/10732
 
 var angular = require('angular');
@@ -49029,11 +49055,11 @@ var mask = require('./dist/mask');
 
 module.exports = 'ui.mask';
 
-},{"./dist/mask":16,"angular":19}],18:[function(require,module,exports){
-arguments[4][14][0].apply(exports,arguments)
-},{"dup":14}],19:[function(require,module,exports){
+},{"./dist/mask":17,"angular":20}],19:[function(require,module,exports){
 arguments[4][15][0].apply(exports,arguments)
-},{"./angular":18,"dup":15}],20:[function(require,module,exports){
+},{"dup":15}],20:[function(require,module,exports){
+arguments[4][16][0].apply(exports,arguments)
+},{"./angular":19,"dup":16}],21:[function(require,module,exports){
 
 /**
  * This is the web browser implementation of `debug()`.
@@ -49203,7 +49229,7 @@ function localstorage(){
   } catch (e) {}
 }
 
-},{"./debug":21}],21:[function(require,module,exports){
+},{"./debug":22}],22:[function(require,module,exports){
 
 /**
  * This is the common logic for both the Node.js and web browser
@@ -49402,7 +49428,7 @@ function coerce(val) {
   return val;
 }
 
-},{"ms":24}],22:[function(require,module,exports){
+},{"ms":25}],23:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v2.2.3
  * http://jquery.com/
@@ -59246,7 +59272,7 @@ if ( !noGlobal ) {
 return jQuery;
 }));
 
-},{}],23:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 (function (global){
 /**
  * @license
@@ -75277,7 +75303,7 @@ return jQuery;
 }.call(this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],24:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 /**
  * Helpers.
  */
@@ -75404,14 +75430,14 @@ function plural(ms, n, name) {
   return Math.ceil(ms / n) + ' ' + name + 's';
 }
 
-},{}],25:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 angular
 .module('surfSup')
 .service ('CacheEngine', function($cacheFactory){
   return $cacheFactory('sessionsAPI');
 });
 
-},{}],26:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 angular
   .module('surfSup')
   .service('FriendService', function($http, $rootScope) {
@@ -75485,7 +75511,7 @@ angular
 
   });
 
-},{}],27:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 angular
   .module('surfSup')
   .service('SessionService', function($http, $q, $rootScope) {
@@ -75566,7 +75592,7 @@ angular
 
   });
 
-},{}],28:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 angular
   .module('surfSup')
   .service('UserService', function($http) {
@@ -75601,7 +75627,7 @@ angular
     };
   });
 
-},{}],29:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 angular
   .module('surfSup')
   .service('WeatherService', function($http) {
@@ -75637,7 +75663,7 @@ angular
 
   Here's an example URL showing the forecast for Newquay: http://magicseaweed.com/api/05b02278d73272e0e716626de5b875e4/forecast/?spot_id=1 */
 
-},{}],30:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 /*!
 angular-xeditable - 0.1.11
 Edit-in-place for angular.js

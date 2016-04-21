@@ -8,14 +8,15 @@
 }
 }
 .indiv-sesh-activities-container p , h5, strong {
-  font-family: 'Inconsolata', sans-serif;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
 }
 .add-session-button {
   background-color: #1F5064;
   border: none;
-  font-family: 'Open Sans Condensed', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   color: white;
-  font-weight: 700;
+  font-weight: 400;
   text-transform: uppercase;
   padding: 8px 10px;
   display: block;
@@ -29,7 +30,7 @@ strong {
 }
 h6 {
   color: white;
-  font-family: 'Inconsolata', sans-serif;
+  font-family: 'Open Sans Condensed', sans-serif;
   text-align: center;
   font-size: 1em;
 }
@@ -63,8 +64,11 @@ h6 {
   }
   a {
     color: white;
-    font-family: 'Inconsolata', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     cursor: pointer;
+  }
+  .view-map a {
+    color: #FC9B1B;
   }
   a:hover {
     color: lightgrey;
@@ -80,21 +84,21 @@ h6 {
     border-bottom: none;
   }
   .sesh-descriptions {
-    font-family: 'Inconsolata', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: 1.2em;
   }
   .sesh-descripter {
-    font-family: 'Inconsolata', sans-serif;
-    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
     color: white;
     font-size: 1.2em;
   }
   .who-is-going-button {
     background-color: #278A86;
-    font-family: 'Open Sans Condensed', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     color: white;
     border: none;
-    font-weight: 700;
+    font-weight: 400;
     padding: 8px;
     letter-spacing: 1px;
   }

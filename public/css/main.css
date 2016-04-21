@@ -77,7 +77,7 @@ div#myModal.modal.fade {
   -webkit-box-shadow: none !important;
   -moz-box-shadow: none !important;
   box-shadow: none !important;
-  font-family: 'Inconsolata', sans-serif; }
+  font-family: 'Montserrat', sans-serif; }
 
 .add-session-form .add-session-form input {
   height: 48px; }
@@ -96,7 +96,7 @@ div#myModal.modal.fade {
   box-shadow: none;
   border: none;
   color: white;
-  font-family: 'Inconsolata', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   color: white;
   text-transform: uppercase;
   width: 135px;
@@ -118,14 +118,15 @@ div#myModal.modal.fade {
     padding: 40px 80px; } }
 
 .indiv-sesh-activities-container p, h5, strong {
-  font-family: 'Inconsolata', sans-serif; }
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400; }
 
 .add-session-button {
   background-color: #1F5064;
   border: none;
-  font-family: 'Open Sans Condensed', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   color: white;
-  font-weight: 700;
+  font-weight: 400;
   text-transform: uppercase;
   padding: 8px 10px;
   display: block;
@@ -139,7 +140,7 @@ strong {
 
 h6 {
   color: white;
-  font-family: 'Inconsolata', sans-serif;
+  font-family: 'Open Sans Condensed', sans-serif;
   text-align: center;
   font-size: 1em; }
 
@@ -169,8 +170,10 @@ h6 {
     font-size: .6em; }
   .list-group a {
     color: white;
-    font-family: 'Inconsolata', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     cursor: pointer; }
+  .list-group .view-map a {
+    color: #FC9B1B; }
   .list-group a:hover {
     color: lightgrey; }
   .list-group p {
@@ -181,19 +184,19 @@ h6 {
   .list-group a.editable-click {
     border-bottom: none; }
   .list-group .sesh-descriptions {
-    font-family: 'Inconsolata', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: 1.2em; }
   .list-group .sesh-descripter {
-    font-family: 'Inconsolata', sans-serif;
-    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
     color: white;
     font-size: 1.2em; }
   .list-group .who-is-going-button {
     background-color: #278A86;
-    font-family: 'Open Sans Condensed', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     color: white;
     border: none;
-    font-weight: 700;
+    font-weight: 400;
     padding: 8px;
     letter-spacing: 1px; }
   .list-group li {
@@ -254,7 +257,6 @@ h6 {
 
 body {
   background-color: none;
-  font-family: 'Lato', sans-serif;
   background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("../images/SurfSUP_BackgroundImage(WEB-SAFE).jpg");
   background-size: cover;
   background-repeat: no-repeat;
@@ -299,6 +301,17 @@ h1 {
   background-color: rgba(250, 250, 250, 0.6);
   border-radius: 0; }
 
+.navigation-container {
+  margin: 0 auto; }
+
+@media (min-width: 768px) {
+  .navigation-container {
+    width: 750px; } }
+
+@media (min-width: 992px) {
+  .navigation-container {
+    width: 970px; } }
+
 @media (min-width: 450px) {
   .wind-column {
     width: 26%; } }
@@ -333,7 +346,7 @@ h1 {
   .login-innerSiteWrapper h1 {
     margin: 0;
     padding: 20px 0;
-    font-family: 'Inconsolata', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: 2em;
     color: white; }
 
@@ -343,8 +356,8 @@ form {
   margin: 0 auto;
   color: #7d7d7d; }
   form h1 {
-    font-family: 'Inconsolata', sans-serif;
-    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
     text-align: center;
     font-size: 1.6em;
     letter-spacing: 1px;
@@ -355,7 +368,7 @@ form {
     -webkit-box-shadow: none !important;
     -moz-box-shadow: none !important;
     box-shadow: none !important;
-    font-family: 'Inconsolata', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     color: grey; }
   form input.form-control, form input.form-control:-webkit-autofill {
     -webkit-box-shadow: 0 0 0 1000px white inset !important; }
@@ -363,13 +376,15 @@ form {
     margin: -14px 0 0; }
   form .create-form {
     max-width: 465px;
-    font-family: 'Inconsolata', sans-serif; }
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400; }
   form .create-form input {
     height: 48px; }
   form .create-form input:focus {
     border: 1px solid #ABABAB; }
   form .create-form label {
-    font-family: 'Inconsolata', sans-serif;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
     text-transform: uppercase;
     letter-spacing: 1px;
     font-size: 1em;
@@ -380,7 +395,7 @@ form {
     box-shadow: none;
     border: none;
     color: white;
-    font-family: 'Inconsolata', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     color: white;
     text-transform: uppercase;
     width: 135px;
@@ -406,15 +421,17 @@ form {
     text-decoration: none;
     opacity: 0.9; }
   form #create-form-link {
-    font-size: 1.3em;
+    font-size: 1em;
     text-transform: uppercase;
-    font-family: 'Inconsolata', sans-serif; }
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400; }
   form #main-input {
     border-radius: 0;
     padding: 0 15px; }
   form label {
     text-transform: uppercase;
-    font-family: 'Inconsolata', sans-serif;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
     font-size: 1.3em; }
 
 .create-outterSiteWrapper {
@@ -434,7 +451,7 @@ form {
   .create-innerSiteWrapper h1 {
     margin: 0;
     padding: 23px 0;
-    font-family: 'Inconsolata', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: 1.7em;
     color: white; }
   .create-innerSiteWrapper .create-header-wrapper {
@@ -447,7 +464,7 @@ form {
     background: -webkit-linear-gradient(left, #0B6575 0%, #326D6E 100%);
     background: linear-gradient(to right, #0B6575 0%, #326D6E 100%); }
   .create-innerSiteWrapper h1 {
-    font-family: 'Inconsolata', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     font-weight: 700;
     text-align: center;
     font-size: 1.6em;
@@ -459,17 +476,17 @@ form {
     -webkit-box-shadow: none !important;
     -moz-box-shadow: none !important;
     box-shadow: none !important;
-    font-family: 'Inconsolata', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     color: white; }
   .create-innerSiteWrapper .create-form {
     max-width: 465px;
-    font-family: 'Inconsolata', sans-serif; }
+    font-family: 'Montserrat', sans-serif; }
   .create-innerSiteWrapper .create-form input {
     height: 48px; }
   .create-innerSiteWrapper .create-form input:focus {
     border: 1px solid #ABABAB; }
   .create-innerSiteWrapper .create-form label {
-    font-family: 'Inconsolata', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     text-transform: uppercase;
     letter-spacing: 1px;
     font-size: 1.2em;
@@ -479,7 +496,7 @@ form {
     box-shadow: none;
     border: none;
     color: white;
-    font-family: 'Inconsolata', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     color: white;
     text-transform: uppercase;
     border-radius: 4px;
@@ -529,7 +546,7 @@ form {
     font-size: 80px;
     color: #1F5064; }
   #profileWrapper .profileInfo {
-    font-family: 'Inconsolata', sans-serif;
+    font-family: 'Open Sans Condensed', sans-serif;
     color: #444;
     font-weight: bold;
     letter-spacing: 0px;
@@ -543,6 +560,9 @@ form {
     margin-top: 10px;
     background-color: #1F5064;
     color: #fff; }
+
+.active {
+  border-bottom: 1px solid #fff; }
 
 h1#PageHeadline {
   font-family: 'Open Sans Condensed', sans-serif;
@@ -576,13 +596,13 @@ ul {
     text-transform: uppercase;
     color: #fff; }
   ul li.cityLink a:hover {
-    color: #ddd; }
+    border-bottom: 1px solid #fff; }
 
 div.tableWrapper {
   padding: 10px;
   margin: 0 50px; }
   div.tableWrapper th {
-    font-family: 'Inconsolata';
+    font-family: 'Open Sans Condensed', sans-serif;
     border-top: none;
     text-align: center;
     font-weight: 100; }
@@ -651,7 +671,7 @@ h1#PageHeadline {
   background-color: #fafafa;
   width: 300px;
   margin: 0 auto;
-  font-family: 'Inconsolata', sans-serif;
+  font-family: 'Open Sans Condensed', sans-serif;
   color: #278A86;
   font-size: 16px;
   text-transform: uppercase; }
@@ -665,7 +685,7 @@ input#friendsSearchBar {
   min-width: 300px;
   outline: none;
   border: 1px solid white;
-  font-family: 'Inconsolata', sans-serif;
+  font-family: 'Open Sans Condensed', sans-serif;
   background-color: #ccc;
   color: #fff;
   text-transform: uppercase;
@@ -761,34 +781,40 @@ header.page-header.push {
     background: linear-gradient(to right, #0B6575 0%, #326D6E 100%);
     border: none;
     padding: 0px 25px;
+    height: 102px;
     margin: 0; }
   header.page-header.push #logoutBtn {
     color: #278A86;
     background-color: #fff;
     border-color: #ccc;
     font-weight: bold;
-    padding: 5px; }
+    padding: 5px;
+    float: right; }
   header.page-header.push .logOutAndFriend {
     position: relative;
-    top: 24px; }
+    top: 35px; }
+  header.page-header.push #username-display-nav {
+    margin-bottom: 3px; }
   header.page-header.push #navbarDesktop {
     position: relative;
     bottom: 7px;
     width: 71%; }
   header.page-header.push #navbarDesktop li {
     color: #ddd;
-    font-size: 16px; }
+    font-size: 17px; }
   header.page-header.push #navbarDesktop li:hover {
     color: #fff;
     border-bottom: 1px solid #fff; }
   header.page-header.push h3 {
-    display: inline-block; }
+    display: inline-block;
+    margin: 0; }
   header.page-header.push #logo-header a {
     font-family: 'Open Sans Condensed', sans-serif;
-    font-size: 1.5em;
+    font-size: 2em;
     color: #fff;
     font-weight: 900;
-    display: inline-block; }
+    display: inline-block;
+    margin-top: 20px; }
   header.page-header.push a:hover {
     text-decoration: none; }
   header.page-header.push ul.desktop-navigation.ng-scope a {
@@ -798,14 +824,21 @@ header.page-header.push {
     font-size: 2em;
     color: #191DA5;
     margin-right: 15px; }
-  @media (max-width: 765px) {
+  @media (min-width: 992) {
+    header.page-header.push .menu-link {
+      display: inline-block; }
+    header.page-header.push .desktop-navigation {
+      display: inline-block; } }
+  @media (max-width: 991px) {
     header.page-header.push .menu-link {
       display: inline-block; }
     header.page-header.push .desktop-navigation {
       display: none; } }
   header.page-header.push .friendRequestIcon {
     display: inline-block;
-    margin-right: 10px; }
+    margin-right: 10px;
+    float: right;
+    margin-top: 5px; }
     header.page-header.push .friendRequestIcon:hover {
       cursor: pointer; }
     header.page-header.push .friendRequestIcon .friendCircle {
@@ -819,7 +852,7 @@ header.page-header.push {
   margin: 15px 0px; }
 
 .mobile-nav-links a {
-  font-family: 'Inconsolata', sans-serif; }
+  font-family: 'Open Sans Condensed', sans-serif; }
 
 .panel {
   background-color: white; }

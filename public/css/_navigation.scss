@@ -19,6 +19,7 @@ header.page-header.push {
     background: linear-gradient(to right, #0B6575 0%, #326D6E 100%);
     border: none;
     padding: 0px 25px;
+    height: 102px;
     margin: 0;
   }
   #logoutBtn {
@@ -27,10 +28,14 @@ header.page-header.push {
     border-color: #ccc;
     font-weight: bold;
     padding: 5px;
+    float: right;
   }
   .logOutAndFriend {
     position: relative;
-    top: 24px;
+    top: 35px;
+  }
+  #username-display-nav {
+    margin-bottom: 3px;
   }
   #navbarDesktop {
     position: relative;
@@ -39,7 +44,7 @@ header.page-header.push {
   }
   #navbarDesktop li {
     color: #ddd;
-    font-size: 16px;
+    font-size: 17px;
   }
   #navbarDesktop li:hover {
     color: #fff;
@@ -47,13 +52,15 @@ header.page-header.push {
   }
   h3 {
     display: inline-block;
+    margin: 0;
   }
   #logo-header a {
     font-family: 'Open Sans Condensed', sans-serif;
-    font-size: 1.5em;
+    font-size: 2em;
     color: #fff;
     font-weight: 900;
     display: inline-block;
+    margin-top: 20px;
   }
   a:hover {
     text-decoration: none;
@@ -67,7 +74,15 @@ header.page-header.push {
     color: #191DA5;
     margin-right: 15px;
   }
-  @media (max-width: 765px) {
+  @media (min-width: 992) {
+    .menu-link {
+      display: inline-block;
+    }
+    .desktop-navigation {
+      display: inline-block;
+    }
+  }
+  @media (max-width: 991px) {
     .menu-link {
       display: inline-block;
     }
@@ -78,6 +93,8 @@ header.page-header.push {
   .friendRequestIcon {
     display: inline-block;
     margin-right: 10px;
+    float: right;
+    margin-top: 5px;
     &:hover {
       cursor: pointer;
     }

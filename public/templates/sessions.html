@@ -24,13 +24,13 @@
         <div class="edit-delete-sesh" ng-controller="UserController">
             <p class="list-group-item-text" ng-if="currentUser.username!==seshActivities.user.username"> <span class="sesh-descripter">
                 Where: </span> <a class = "sesh-descriptions">{{seshActivities.location}}</a>
-                <a ng-click="showMap(seshActivities.id)" data-toggle="modal" data-target="#myModal">(view map)</a>
+                <a ng-click="showMap(seshActivities.id)" class="view-map" data-toggle="modal" data-target="#myModal">(view map)</a>
             </p>
 
             <p class="list-group-item-text" ng-if="currentUser.username===seshActivities.user.username"> <span class="sesh-descripter">
                 Where: </span> <a class = "sesh-descriptions editable-sesh" editable-text="seshActivities.location" href="#" onaftersave=
                 "editSession(seshActivities)">{{seshActivities.location}}</a>
-                <a ng-click="showMap(seshActivities.id)" data-toggle="modal" data-target="#myModal">(view map)</a>
+                <a ng-click="showMap(seshActivities.id)" class="view-map" data-toggle="modal" data-target="#myModal">(view map)</a>
             </p>
 
             <!-- MODAL -->
@@ -42,6 +42,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <!-- <h4 class="modal-title" id="myModalLabel"><strong>{{seshActivities.user.username}}
                     </strong> is going    <strong>  {{seshActivities.isSurf ? 'Surfing' : 'Paddle Boarding'}} </strong> on  {{seshActivities.time | date : 'EEEE, MMMM d, h:mm a'}} </h4> -->
+                    <strong>LOCATION: </strong>
                   </div>
                   <div class="modal-body">
                     <ui-gmap-google-map  draggable="true" center="seshMap.center" zoom="seshMap.zoom">

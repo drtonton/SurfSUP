@@ -24,7 +24,7 @@ angular
     $routeProvider
       .when('/home', {
         templateUrl: "templates/homepage.html",
-        controller: "UserController",
+        controller: "WeatherController",
       })
       .when('/', {
         redirectTo: '/login'
@@ -75,7 +75,8 @@ require('./controllers/userController');
 require('./controllers/sessionController');
 require('./controllers/friendController');
 require('./controllers/navbar.controller');
+require('./controllers/profile.controller');
+require('./controllers/weather.controller');
 require('./controllers/mapController');
 require ('./directives/sessionDirective');
 require ('./directives/mapDirective');
-require('./controllers/profile.controller');

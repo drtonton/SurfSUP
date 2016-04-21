@@ -182,7 +182,10 @@ angular
 //GOOGLE MAPS ON SESSIONS PAGE
 
 $scope.seshMarkers = [];
-function showMap(id) {
+function showMap(id,name,type) {
+
+  $scope.modalName = name;
+  $scope.modalType = type;
    SessionService.getCoords(id)
    .then(function(response) {
      console.log("show map is working", response);
