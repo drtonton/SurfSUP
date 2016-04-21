@@ -431,9 +431,11 @@ public class SurfSupController {
         Sesh sesh = seshs.findOne(id);
         List<User> joined = new ArrayList<>();
         List<Join> all = (List<Join>) joins.findAll();
-        for (Join j : all) {
-            if (j.getSesh().getId() == id) {
-                joined.add(j.getUser());
+        if (all != null) {
+            for (Join j : all) {
+                if (j.getSesh().getId() == id) {
+                    joined.add(j.getUser());
+                }
             }
         }
         joined.remove(sesh.getUser()); // removes the sesh creator from the list
