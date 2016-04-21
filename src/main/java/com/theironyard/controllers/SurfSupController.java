@@ -368,16 +368,18 @@ public class SurfSupController {
         User user = getUserFromSession(session);
         List<Friend> allList = (List<Friend>) friends.findAll();
         List<User> requestList = new ArrayList<>();
-        for (Friend f : allList) {
+        if (allList != null) {
+            for (Friend f : allList) {
 
-            // populating requestList with users who "friended" current user
-            if (f.getApprover().getId()==user.getId()) {
-                requestList.add(f.getRequester());
+                // populating requestList with users who "friended" current user
+                if (f.getApprover().getId() == user.getId()) {
+                    requestList.add(f.getRequester());
 
-                // removing users from requestList who have been "friended back" by current user
-                for(Friend f2 : allList) {
-                    if (f2.getRequester().getId() == user.getId()) {
-                        requestList.remove(f2.getApprover());
+                    // removing users from requestList who have been "friended back" by current user
+                    for (Friend f2 : allList) {
+                        if (f2.getRequester().getId() == user.getId()) {
+                            requestList.remove(f2.getApprover());
+                        }
                     }
                 }
             }
