@@ -479,6 +479,19 @@ public class SurfSupController {
         Friend friend2 = friends.findFirstByRequesterAndApprover(friendToRemove, loggedInUser);
         friends.delete(friend);
         friends.delete(friend2);
+
+        //creates a list of join objects created by the user being removed
+        List<Join> joinsFromRemovedFriend = joins.findAllByUser(friendToRemove);
+        if (joinsFromRemovedFriend != null) {
+            for (Join j : joinsFromRemovedFriend) {
+
+                //in other words, if this person joined one of your sesh's (via a join object), the corresponding
+                // join object will be deleted as well
+                if (j.getSesh().getUser().getId() == loggedInUser.getId()) {
+                    joins.delete(j);
+                }
+            }
+        }
     }
 
     //DENY FRIEND REQUEST (THE ID = FRIENDING USER ID)
