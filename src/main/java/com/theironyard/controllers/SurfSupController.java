@@ -166,8 +166,8 @@ public class SurfSupController {
      * This will create a Friend object (User requester, User responder). Does not set the parameter
      * isAccepted (this boolean is only changed when the friend request is accepted). The @RequestBody
      * String username refers to the username of the approver.
-     * @param session
-     * @param username
+     * @param session : logged in user
+     * @param username : Username of the user being friend requested
      * @throws Exception
      */
     //SEND FRIEND REQUEST
@@ -186,8 +186,8 @@ public class SurfSupController {
     /**
      * This will create the reciprocal of the Friend object created by method: createFriend.
      * This created object will have its boolean parameter, isAccepted, set to TRUE.
-     * @param session
-     * @param username
+     * @param session : logged in user
+     * @param username : Username of user who requested friendship
      * @throws Exception
      */
     //ACCEPTS FRIEND REQUEST
@@ -327,7 +327,7 @@ public class SurfSupController {
         User loggedIn = getUserFromSession(session);
         List <Sesh> usersSeshs = seshs.findAllByUser(loggedIn);
         List <Sesh> friendsSeshs = new ArrayList<>();
-        // friendsSesh is to be returned product
+        // friendsSeshs is to be the return
 
         List<Friend> allList = friends.findAllByRequester(loggedIn);
         allList.addAll(friends.findAllByApprover(loggedIn));
@@ -467,8 +467,8 @@ public class SurfSupController {
 
     /**
      * This will remove two Friend objects: the original and its reciprocal.
-     * @param id
-     * @param session
+     * @param id : "id" of user being removed
+     * @param session : logged in user
      */
     //REMOVE SOMEONE FROM FRIENDS LIST
     @RequestMapping(path = "/friend/{id}", method = RequestMethod.DELETE)
