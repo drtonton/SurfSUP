@@ -444,8 +444,7 @@ public class SurfSupController {
     //RETURNS A SINGLE SESH OBJECT (ID = SESH ID)
     @RequestMapping(path = "/sesh/{id}/coords", method = RequestMethod.GET)
     public Sesh oneSesh (@PathVariable("id") int id) {
-        Sesh s = seshs.findOne(id);
-        return s;
+        return seshs.findOne(id);
     }
 
     //EDIT EXISTING SESH
