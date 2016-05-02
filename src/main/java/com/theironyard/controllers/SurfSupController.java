@@ -410,11 +410,13 @@ public class SurfSupController {
                 }
             }
         }
-        if (requestList != null) {
-            return requestList;
+        // according to intellij, below boolean expression is always false. unsure how this is true, considering
+        // requestList is only populated if allList isn't null.
+        if (requestList == null) {
+            throw new Exception("No friend requests have been made for this user");
         }
         else {
-            throw new Exception("No friend requests have been made for this user");
+            return requestList;
         }
     }
 
@@ -459,8 +461,7 @@ public class SurfSupController {
     //DELETE A SESSION
     @RequestMapping(path = "/sesh/{id}", method = RequestMethod.DELETE)
     public void deleteSesh (@PathVariable("id") int id) {
-        Sesh sesh = seshs.findOne(id);
-        seshs.delete(sesh);
+        seshs.delete(seshs.findOne(id));
     }
 
     /**
@@ -506,8 +507,7 @@ public class SurfSupController {
      */
 
     public User getUserFromSession(HttpSession session) {
-        User user = users.findByUsername((String) session.getAttribute("username"));
-        return user;
+        return users.findByUsername((String) session.getAttribute("username"));
     }
 
     public List<User> returnList (User user, List<Friend> allList) {
