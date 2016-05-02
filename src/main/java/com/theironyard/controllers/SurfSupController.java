@@ -421,8 +421,7 @@ public class SurfSupController {
     //DISPLAY PROFILE
     @RequestMapping(path = "/user/{id}", method = RequestMethod.GET)
     public User showProfile (@PathVariable("id") int id) {
-        User user = users.findOne(id);
-        return user;
+        return users.findOne(id);
     }
 
     //DISPLAY USERS WHO JOINED A SESH (ID = SESH ID)
