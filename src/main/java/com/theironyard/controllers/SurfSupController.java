@@ -410,9 +410,7 @@ public class SurfSupController {
                 }
             }
         }
-        // according to intellij, below boolean expression is always false. unsure how this is true, considering
-        // requestList is only populated if allList isn't null.
-        if (requestList == null) {
+        if (requestList.size() == 0) {
             throw new Exception("No friend requests have been made for this user");
         }
         else {
