@@ -51,5 +51,3 @@ crashlytics-build.properties
 .DS_Store
 *.log
 npm-debug.log
-bower_components
-node_modules

@@ -288,7 +288,7 @@ public class SurfSupController {
         return (String) session.getAttribute("username");
     }
 
-    //RETURNS CURRENT USER
+    //RETURNS CURRENT USER PROFILE
     @RequestMapping(path = "/currentUser", method = RequestMethod.GET)
     public User loggedInUser (HttpSession session) {
         return getUserFromSession(session);
