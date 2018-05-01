@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 /**
- * Created by noellemachin on 4/7/16.
+ * Created by keatonfoster on 4/7/16.
  */
 public interface SeshRepository extends CrudRepository<Sesh, Integer>{
     List<Sesh> findAllByUser (User user);

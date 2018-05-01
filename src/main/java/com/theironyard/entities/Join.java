@@ -3,7 +3,7 @@ package com.theironyard.entities;
 import javax.persistence.*;
 
 /**
- * Created by noellemachin on 4/8/16.
+ * Created by keatonfoster on 4/8/16.
  */
 @Entity
 @Table(name = "joins")

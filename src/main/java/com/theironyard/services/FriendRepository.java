@@ -8,7 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 /**
- * Created by noellemachin on 4/11/16.
+ * Created by keatonfoster on 4/11/16.
  */
 public interface FriendRepository extends CrudRepository<Friend, Integer> {
     List <Friend> findAllByRequester (User requester);

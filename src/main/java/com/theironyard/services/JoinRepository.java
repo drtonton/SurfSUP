@@ -8,7 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 /**
- * Created by noellemachin on 4/8/16.
+ * Created by keatonfoster on 4/8/16.
  */
 public interface JoinRepository extends CrudRepository<Join, Integer> {
     List<Join> findAllBySesh(Sesh sesh);
